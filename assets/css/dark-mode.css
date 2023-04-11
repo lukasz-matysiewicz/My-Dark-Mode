@@ -1,0 +1,37 @@
+/* body[my-dark-mode='light']{$bg_color_class} {
+    background-color: {$light_bg_color}!important;
+}
+body[my-dark-mode='light']{$heading_color_class} {
+    color: {$light_heading_color}!important;
+}
+body[my-dark-mode='light']{$text_color_class} {
+    color: {$light_text_color}!important;
+}
+body[my-dark-mode='light']{$link_text_color_class} {
+    color: {$light_link_text_color}!important;
+}
+body[my-dark-mode='light']{$btn_bg_color_class} {
+    background-color: {$light_btn_bg_color}!important;
+}
+body[my-dark-mode='dark']{$bg_color_class} {
+    background-color: {$dark_bg_color}!important;
+}
+body[my-dark-mode='dark']{$heading_color_class} {
+    color: {$dark_heading_color}!important;
+}
+body[my-dark-mode='dark']{$text_color_class} {
+    color: {$dark_text_color}!important;
+}
+body[my-dark-mode='dark']{$link_text_color_class} {
+    color: {$dark_link_text_color}!important;
+}
+body[my-dark-mode='dark']{$btn_bg_color_class} {
+    background-color: {$dark_btn_bg_color}!important;
+} */
+body[my-dark-mode='light'], body[my-dark-mode='dark'] {
+    -webkit-transition: background-color 0.3s ease-out;
+    -moz-transition: background-color 0.3s ease-out;
+    -o-transition: background-color 0.3s ease-out;
+    transition: background-color 0.3s ease-out;
+}
+

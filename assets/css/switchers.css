@@ -1,0 +1,113 @@
+/* 
+
+<button data-dark-mode-toggle aria-label="Toggle Dark Mode" class="switch1">
+  <input type="checkbox" id="toggle">
+  <label for="toggle" class="switch1"></label>
+</button>
+
+*/
+.switcher {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+  }
+  
+  .switch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .switch::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+    background-color: #fff;
+    transition: all 0.3s;
+  }
+  
+  .switching .switch1 {
+    background-color: #ffc107; /* Change color when toggle is switched on*/
+  }
+  
+  .switching .switch1::before {
+    transform: translateX(16px); /* Move switch to the right when toggle is switched on */
+  }
+  
+  #toggle1:checked + .switch {
+    background-color: #333; /* Ddark theme background color*/
+  }
+  
+  #toggle1:checked + .switch::before {
+    background-color: #ffc107; /* Change color of sun icon when toggle is switched on */
+    transform: translateX(16px);  /* Move switch to the right when toggle is switched on */
+  }
+  
+  /* Moon icon style */
+  .switch1::after {
+    content: "☽";
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    font-size: 16px;
+    color: #fff;
+  }
+  
+  #toggle1:checked + .switch::after {
+    content: "☀"; /* Change icon to sun when toggle is switched on */
+  }
+  
+
+/*
+
+<button data-dark-mode-toggle aria-label="Toggle Dark Mode" class="switch2">
+  <input type="checkbox" id="toggle2">
+  <label for="toggle2" class="switch"></label>
+</button>
+
+*/
+
+.switch2 {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #ccc;
+  }
+  
+  .switch2 .switch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .switch2 input[type="checkbox"] {
+      visibility: hidden;
+    }
+  
+  #toggle2:checked + .switch {
+    background-color: #333; /* Dark theme background color*/
+  }
+  
+  #toggle2:checked + .switch::before {
+    content: "☀"; /* Change icon to sun when toggle is switched on */
+    color: #ffc107; /* Change color of sun icon when toggle is switched on */
+  }
+  
