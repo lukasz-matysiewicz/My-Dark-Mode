@@ -15,10 +15,13 @@ function my_dark_mode_enqueue_scripts() {
 
     // Enqueue the dark-mode.css file
     wp_enqueue_style('my-dark-mode-css', plugin_dir_url(__FILE__) . 'assets/css/dark-mode.css', array(), '1.0', 'all');
-    
+
+    // Enqueue the switchers.css file for both admin and front-end
+    wp_enqueue_style('my-dark-mode-switchers-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
+
     wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
 }
-add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
 
 // create setting page
 function my_dark_mode_admin_menu() {
@@ -89,22 +92,48 @@ function my_dark_mode_section_callback() {
     <div>Use those fields to customize My Dark Mode Styles.</div>
     <?php
 }
+
 //global variables
 function get_dark_mode_settings() {
     $switcher = get_option('my_dark_mode_switcher', 'no_switcher');
-    $default_button_code = '<button data-dark-mode-toggle aria-label="Toggle Dark Mode">Toggle Dark Mode</button>';
+    $default_button_code = '<div class="mode-single-switch-border"><input type="checkbox" id="mode-switch-single" data-dark-mode-toggle aria-label="Toggle Dark Mode"><label for="mode-switch-single" class="mode-label-single"><div class="toggle"></div><div class="names"><p class="light">Light</p><p class="dark">Dark</p></div></label></div>';
     $button_code = get_option('my_dark_mode_button_code', $default_button_code);
+
+    $switcher1_html = '
+    <div class="mode-switch-border">
+        <input type="checkbox" id="mode-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
+        <label for="mode-switch" class="mode-label">
+        <div class="toggle"></div>
+        <div class="names">
+            <p class="light">Light</p>
+            <p class="dark">Dark</p>
+        </div>
+        </label>
+    </div>';
+
+    $switcher2_html = '
+    <div class="circle-switch-border">
+        <input type="checkbox" id="circle-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
+        <label for="circle-switch" class="circle-label">
+        <div class="circle">
+            <div class="crescent"></div>
+        </div>
+        </label>
+    </div>';
 
     return array(
         'switcher' => $switcher,
         'default_button_code' => $default_button_code,
-        'button_code' => $button_code
+        'button_code' => $button_code,
+        'switcher1_html' => $switcher1_html,
+        'switcher2_html' => $switcher2_html
     );
 }
 
 function my_dark_mode_button_code_callback() {
     $settings = get_dark_mode_settings();
     $button_code = $settings['button_code'];
+    $default_button_code = $settings['default_button_code'];
     ?>
     <div><strong>IMPORTANT:</strong> please use button attribute: <strong>data-dark-mode-toggle</strong></br></br>
     To use dark mode button on your website use <strong>widget</strong> or this shortcode: <strong>[my_dark_mode_toggle_button]</strong></br></br>If you are not fluent with html,css and need help customize button please use this customizer: <a href="https://codebeautify.org/html-button-generator">https://codebeautify.org/html-button-generator</a></div>
@@ -113,7 +142,7 @@ function my_dark_mode_button_code_callback() {
     <button type="button" id="my_dark_mode_reset_button" class="button">Reset Button Code</button>
     <script>
     document.getElementById('my_dark_mode_reset_button').addEventListener('click', function() {
-        var defaultButtonCode = '<?php echo addslashes('<button data-dark-mode-toggle aria-label="Toggle Dark Mode">Toggle Dark Mode</button>'); ?>';
+        var defaultButtonCode = '<?php echo addslashes(str_replace("\n", "", $default_button_code)); ?>';
             myDarkModeEditor.codemirror.setValue(defaultButtonCode);
     });
     </script>
@@ -124,30 +153,22 @@ function my_dark_mode_switcher_section_callback(){
     $settings = get_dark_mode_settings();
     $switcher = $settings['switcher'];
     $button_code = $settings['button_code'];
+    ?>
+    <div>
+        Current button look:
+    </div>
+    <?php
 
-    ob_start();
     if($switcher == 'no_switcher'){
-        echo esc_html($button_code);
+        echo $settings['button_code'];
     }
     if($switcher == 'switcher1'){
-        echo esc_html('        
-        <label>
-        <button class="switch1">
-            <input type="checkbox" id="toggle">
-            <label for="toggle" class="switch1"></label>
-        </button>
-        </label>');
+        echo $settings['switcher1_html'];
     }
     if($switcher == 'switcher2'){
-        echo esc_html('        
-        <label>
-        <button class="switch2">
-            <input type="checkbox" id="toggle">
-            <label for="toggle" class="switch2"></label>
-        </button>
-        </label>');
+        echo $settings['switcher2_html'];
     }
-    ob_end_clean();
+
 
     ?>
     <div>
@@ -160,24 +181,25 @@ function my_dark_mode_switcher_section_callback(){
         <label>
             <input type="radio" name="my_dark_mode_switcher" value="switcher1" <?php checked($switcher, 'switcher1'); ?>>
             Switcher 1
-            <button class="switch1">
-                <input type="checkbox" id="toggle">
-                <label for="toggle" class="switch1"></label>
-            </button>
         </label>
+        <div>
+            Preview:
+            <?php echo $settings['switcher1_html']; ?>
+        </div>
     </div>
     <div>
         <label> 
             <input type="radio" name="my_dark_mode_switcher" value="switcher2" <?php checked($switcher, 'switcher2'); ?>>
             Switcher 2
-            <button class="switch2">
-                <input type="checkbox" id="toggle">
-                <label for="toggle" class="switch2"></label>
-            </button>
         </label>
+        <div>
+            Preview:
+            <?php echo $settings['switcher2_html']; ?>
+        </div>
     </div>
-    <?php
+<?php
 }
+
 function my_dark_mode_logo_callback() {
     $light_logo = get_option('my_dark_mode_light_logo', '');
     $dark_logo = get_option('my_dark_mode_dark_logo', '');
@@ -337,22 +359,10 @@ function my_dark_mode_toggle_button_shortcode() {
         return $button_code;
     }
     if ($switcher == 'switcher1') {
-        return '
-        <label>
-        <button class="switch1">
-            <input type="checkbox" id="toggle" data-dark-mode-toggle>
-            <label for="toggle" class="switch1"></label>
-        </button>
-        </label>';
+        return $settings['switcher1_html'];
     }
     if ($switcher == 'switcher2') {
-        return '
-        <label>
-        <button class="switch2">
-            <input type="checkbox" id="toggle" data-dark-mode-toggle>
-            <label for="toggle" class="switch2"></label>
-        </button>
-        </label>';
+        return $settings['switcher2_html'];
     }
 }
 add_shortcode('my_dark_mode_toggle_button', 'my_dark_mode_toggle_button_shortcode');
@@ -368,7 +378,6 @@ function my_dark_mode_enqueue_admin_scripts($hook) {
 
     // Enqueue the custom admin CSS file
     wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode-admin.css', array(), '1.0', 'all');
-    wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
 
     // Enqueue the custom admin JS file
     wp_enqueue_code_editor(array('type' => 'text/html'));
@@ -376,7 +385,7 @@ function my_dark_mode_enqueue_admin_scripts($hook) {
 
 
 }
-add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts');
+add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
 
 
 //Add color pickers

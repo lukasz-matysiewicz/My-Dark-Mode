@@ -28,6 +28,7 @@ body[my-dark-mode='dark']{$link_text_color_class} {
 body[my-dark-mode='dark']{$btn_bg_color_class} {
     background-color: {$dark_btn_bg_color}!important;
 } */
+
 body[my-dark-mode='light'], body[my-dark-mode='dark'] {
     -webkit-transition: background-color 0.3s ease-out;
     -moz-transition: background-color 0.3s ease-out;
