@@ -48,17 +48,19 @@ function my_dark_mode_settings_page() {
 
     settings_errors('my_dark_mode_messages');
     ?>
-    <div class="wrap">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <form action="<?php echo admin_url('options.php'); ?>" method="post">
-            <input type="hidden" name="action" value="admin_post_save_my_dark_mode_settings">
-            <?php wp_nonce_field('my_dark_mode_nonce'); ?>
-            <?php
-            settings_fields('my_dark_mode');
-            do_settings_sections('my_dark_mode');
-            submit_button('Save Settings');
-            ?>
-        </form>
+    <div class="my-dark-mode-container">
+        <div class="wrap">
+            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <form action="<?php echo admin_url('options.php'); ?>" method="post">
+                <input type="hidden" name="action" value="admin_post_save_my_dark_mode_settings">
+                <?php wp_nonce_field('my_dark_mode_nonce'); ?>
+                <?php
+                settings_fields('my_dark_mode');
+                do_settings_sections('my_dark_mode');
+                submit_button('Save Settings');
+                ?>
+            </form>
+        </div>
     </div>
     <?php
 }
@@ -82,8 +84,10 @@ add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings'
 function my_dark_mode_custom_css_callback() {
     $custom_css = get_option('my_dark_mode_custom_css');
     ?>
+    <div class="mdm-container">
     <div>Use this prefix to target elements: <strong>body[my-dark-mode='light'].your_class</strong> or <strong>body[my-dark-mode='dark'].your_class</strong></div>
     <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>
+    </div>
     <?php
 }
 
@@ -135,11 +139,13 @@ function my_dark_mode_button_code_callback() {
     $button_code = $settings['button_code'];
     $default_button_code = $settings['default_button_code'];
     ?>
+    <div class="mdm-container">
     <div><strong>IMPORTANT:</strong> please use button attribute: <strong>data-dark-mode-toggle</strong></br></br>
     To use dark mode button on your website use <strong>widget</strong> or this shortcode: <strong>[my_dark_mode_toggle_button]</strong></br></br>If you are not fluent with html,css and need help customize button please use this customizer: <a href="https://codebeautify.org/html-button-generator">https://codebeautify.org/html-button-generator</a></div>
     <textarea id="my_dark_mode_button_code" name="my_dark_mode_button_code" rows="5" cols="50"><?php echo esc_textarea($button_code); ?></textarea>
     <br>
     <button type="button" id="my_dark_mode_reset_button" class="button">Reset Button Code</button>
+    </div>
     <script>
     document.getElementById('my_dark_mode_reset_button').addEventListener('click', function() {
         var defaultButtonCode = '<?php echo addslashes(str_replace("\n", "", $default_button_code)); ?>';
@@ -153,48 +159,47 @@ function my_dark_mode_switcher_section_callback(){
     $settings = get_dark_mode_settings();
     $switcher = $settings['switcher'];
     $button_code = $settings['button_code'];
-    ?>
-    <div>
+    ?> 
+    <div class="mdm-container">
+    <!-- <div>
         Current button look:
-    </div>
-    <?php
-
-    if($switcher == 'no_switcher'){
-        echo $settings['button_code'];
-    }
-    if($switcher == 'switcher1'){
-        echo $settings['switcher1_html'];
-    }
-    if($switcher == 'switcher2'){
-        echo $settings['switcher2_html'];
-    }
-
-
+    </div> -->
+    <?php 
+    // if($switcher == 'no_switcher'){
+    //     echo $settings['button_code'];
+    // }
+    // if($switcher == 'switcher1'){
+    //     echo $settings['switcher1_html'];
+    // }
+    // if($switcher == 'switcher2'){
+    //     echo $settings['switcher2_html'];
+    // }
     ?>
-    <div>
-        <label>
-            <input type="radio" name="my_dark_mode_switcher" value="no_switcher" <?php checked($switcher, 'no_switcher'); ?>>
-            No Switcher (use custom button code)
-        </label>
-    </div>
-    <div>
-        <label>
-            <input type="radio" name="my_dark_mode_switcher" value="switcher1" <?php checked($switcher, 'switcher1'); ?>>
-            Switcher 1
-        </label>
         <div>
-            Preview:
-            <?php echo $settings['switcher1_html']; ?>
+            <label>
+                <input type="radio" name="my_dark_mode_switcher" value="no_switcher" <?php checked($switcher, 'no_switcher'); ?>>
+                No Switcher (use custom button code)
+            </label>
         </div>
-    </div>
-    <div>
-        <label> 
-            <input type="radio" name="my_dark_mode_switcher" value="switcher2" <?php checked($switcher, 'switcher2'); ?>>
-            Switcher 2
-        </label>
         <div>
-            Preview:
-            <?php echo $settings['switcher2_html']; ?>
+            <label>
+                <input type="radio" name="my_dark_mode_switcher" value="switcher1" <?php checked($switcher, 'switcher1'); ?>>
+                Switcher 1
+            </label>
+            <div>
+                Preview:
+                <?php echo $settings['switcher1_html']; ?>
+            </div>
+        </div>
+        <div>
+            <label> 
+                <input type="radio" name="my_dark_mode_switcher" value="switcher2" <?php checked($switcher, 'switcher2'); ?>>
+                Switcher 2
+            </label>
+            <div>
+                Preview:
+                <?php echo $settings['switcher2_html']; ?>
+            </div>
         </div>
     </div>
 <?php
@@ -204,26 +209,28 @@ function my_dark_mode_logo_callback() {
     $light_logo = get_option('my_dark_mode_light_logo', '');
     $dark_logo = get_option('my_dark_mode_dark_logo', '');
     ?>
-    <div>
-        <input type="button" class="button" id="my_dark_mode_light_logo_button" value="Upload Light Logo">
-        <input type="hidden" id="my_dark_mode_light_logo" name="my_dark_mode_light_logo" value="<?php echo esc_attr($light_logo); ?>">
-    </div>
-    <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
-        <?php if (!empty($light_logo)): ?>
-            <img src="<?php echo esc_url($light_logo); ?>" style="max-width: 100px;">
-            <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
-        <?php endif; ?>
-    </div>
-    <br>
-    <div>
-        <input type="button" class="button" id="my_dark_mode_dark_logo_button" value="Upload Dark Logo">
-        <input type="hidden" id="my_dark_mode_dark_logo" name="my_dark_mode_dark_logo" value="<?php echo esc_attr($dark_logo); ?>">
-    </div>
-    <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
-        <?php if (!empty($dark_logo)): ?>
-            <img src="<?php echo esc_url($dark_logo); ?>" style="max-width: 100px;">
-            <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
-        <?php endif; ?>
+    <div class="mdm-container">
+        <div>
+            <input type="button" class="button" id="my_dark_mode_light_logo_button" value="Upload Light Logo">
+            <input type="hidden" id="my_dark_mode_light_logo" name="my_dark_mode_light_logo" value="<?php echo esc_attr($light_logo); ?>">
+        </div>
+        <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
+            <?php if (!empty($light_logo)): ?>
+                <img src="<?php echo esc_url($light_logo); ?>" style="max-width: 100px;">
+                <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
+            <?php endif; ?>
+        </div>
+        <br>
+        <div>
+            <input type="button" class="button" id="my_dark_mode_dark_logo_button" value="Upload Dark Logo">
+            <input type="hidden" id="my_dark_mode_dark_logo" name="my_dark_mode_dark_logo" value="<?php echo esc_attr($dark_logo); ?>">
+        </div>
+        <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
+            <?php if (!empty($dark_logo)): ?>
+                <img src="<?php echo esc_url($dark_logo); ?>" style="max-width: 100px;">
+                <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
+            <?php endif; ?>
+        </div>
     </div>
 
     <script>

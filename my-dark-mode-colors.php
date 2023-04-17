@@ -17,41 +17,42 @@ function my_dark_mode_colors_callback() {
     $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '#0060a9');
     $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '#0060a9');
     ?>
+    <div class="mdm-container">
+        <table>
+            <tr>
+                <th><h2>Element</h2></th>
+                <th><h2>Color in Light Mode</h2></th>
+                <th><h2>Color in Dark Mode</h2></th>
+            </tr>
+            <tr class="colors">
+                <td id="col1"><h3>Background Color</h3><input type="text" id="mdm_bg_color_class" name="mdm_bg_color_class" value="<?php echo esc_attr($bg_color_class); ?>"></td>
+                <td id="col2"><input type="text" id="mdm_light_bg_color_picker" name="mdm_light_bg_color_picker" value="<?php echo esc_attr($light_bg_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_dark_bg_color_picker" name="mdm_dark_bg_color_picker" value="<?php echo esc_attr($dark_bg_color); ?>"></td>
+            </tr>
+            <tr class="colors">
+                <td id="col1"><h3>Heading Text Color</h3><input type="text" id="mdm_heading_color_class" name="mdm_heading_color_class" value="<?php echo esc_attr($heading_color_class); ?>"></td>
+                <td id="col2"><input type="text" id="mdm_light_heading_color_picker" name="mdm_light_heading_color_picker" value="<?php echo esc_attr($light_heading_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_dark_heading_color_picker" name="mdm_dark_heading_color_picker" value="<?php echo esc_attr($dark_heading_color); ?>"></td>
+            </tr>
+            <tr class="colors">
+                <td id="col1"><h3>Text Color</h3><input type="text" id="mdm_text_color_class" name="mdm_text_color_class" value="<?php echo esc_attr($text_color_class); ?>"></td>
+                <td id="col2"><input type="text" id="mdm_light_text_color_picker" name="mdm_light_text_color_picker" value="<?php echo esc_attr($light_text_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_dark_text_color_picker" name="mdm_dark_text_color_picker" value="<?php echo esc_attr($dark_text_color); ?>"></td>
+            </tr>
+            <tr class="colors">
+                <td id="col1"><h3>Link Text Color</h3><input type="text" id="mdm_link_text_color_class" name="mdm_link_text_color_class" value="<?php echo esc_attr($link_text_color_class); ?>"></td>
+                <td id="col2"><input type="text" id="mdm_light_link_text_color_picker" name="mdm_light_link_text_color_picker" value="<?php echo esc_attr($light_link_text_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_link_dark_text_color_picker" name="mdm_dark_link_text_color_picker" value="<?php echo esc_attr($dark_link_text_color); ?>"></td>
+            </tr>
+            <tr class="colors">
+                <td id="col1"><h3>Button Background Color</h3><input type="text" id="mdm_btn_bg_color_class" name="mdm_btn_bg_color_class" value="<?php echo esc_attr($btn_bg_color_class); ?>"></td>
+                <td id="col2"><input type="text" id="mdm_light_btn_bg_color_picker" name="mdm_light_btn_bg_color_picker" value="<?php echo esc_attr($light_btn_bg_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_dark_btn_bg_color_picker" name="mdm_dark_btn_bg_color_picker" value="<?php echo esc_attr($dark_btn_bg_color); ?>"></td>
+            </tr>
+        </table>
 
-   <table>
-    <tr>
-        <th><h2>Element</h2></th>
-        <th><h2>Color in Light Mode</h2></th>
-        <th><h2>Color in Dark Mode</h2></th>
-    </tr>
-    <tr class="colors">
-        <td id="col1"><h3>Background Color</h3><input type="text" id="mdm_bg_color_class" name="mdm_bg_color_class" value="<?php echo esc_attr($bg_color_class); ?>"></td>
-        <td id="col2"><input type="text" id="mdm_light_bg_color_picker" name="mdm_light_bg_color_picker" value="<?php echo esc_attr($light_bg_color); ?>"></td>
-        <td id="col3"><input type="text" id="mdm_dark_bg_color_picker" name="mdm_dark_bg_color_picker" value="<?php echo esc_attr($dark_bg_color); ?>"></td>
-    </tr>
-    <tr class="colors">
-        <td id="col1"><h3>Heading Text Color</h3><input type="text" id="mdm_heading_color_class" name="mdm_heading_color_class" value="<?php echo esc_attr($heading_color_class); ?>"></td>
-        <td id="col2"><input type="text" id="mdm_light_heading_color_picker" name="mdm_light_heading_color_picker" value="<?php echo esc_attr($light_heading_color); ?>"></td>
-        <td id="col3"><input type="text" id="mdm_dark_heading_color_picker" name="mdm_dark_heading_color_picker" value="<?php echo esc_attr($dark_heading_color); ?>"></td>
-    </tr>
-    <tr class="colors">
-        <td id="col1"><h3>Text Color</h3><input type="text" id="mdm_text_color_class" name="mdm_text_color_class" value="<?php echo esc_attr($text_color_class); ?>"></td>
-        <td id="col2"><input type="text" id="mdm_light_text_color_picker" name="mdm_light_text_color_picker" value="<?php echo esc_attr($light_text_color); ?>"></td>
-        <td id="col3"><input type="text" id="mdm_dark_text_color_picker" name="mdm_dark_text_color_picker" value="<?php echo esc_attr($dark_text_color); ?>"></td>
-    </tr>
-    <tr class="colors">
-        <td id="col1"><h3>Link Text Color</h3><input type="text" id="mdm_link_text_color_class" name="mdm_link_text_color_class" value="<?php echo esc_attr($link_text_color_class); ?>"></td>
-        <td id="col2"><input type="text" id="mdm_light_link_text_color_picker" name="mdm_light_link_text_color_picker" value="<?php echo esc_attr($light_link_text_color); ?>"></td>
-        <td id="col3"><input type="text" id="mdm_link_dark_text_color_picker" name="mdm_dark_link_text_color_picker" value="<?php echo esc_attr($dark_link_text_color); ?>"></td>
-    </tr>
-    <tr class="colors">
-        <td id="col1"><h3>Button Background Color</h3><input type="text" id="mdm_btn_bg_color_class" name="mdm_btn_bg_color_class" value="<?php echo esc_attr($btn_bg_color_class); ?>"></td>
-        <td id="col2"><input type="text" id="mdm_light_btn_bg_color_picker" name="mdm_light_btn_bg_color_picker" value="<?php echo esc_attr($light_btn_bg_color); ?>"></td>
-        <td id="col3"><input type="text" id="mdm_dark_btn_bg_color_picker" name="mdm_dark_btn_bg_color_picker" value="<?php echo esc_attr($dark_btn_bg_color); ?>"></td>
-    </tr>
-    </table>
-
-    <button type="button" id="my_dark_mode_reset_colors" class="button">Reset Colors</button>
+        <button type="button" id="my_dark_mode_reset_colors" class="button">Reset Colors</button>
+    </div>
     <script>
         jQuery(document).ready(function($) {
             $('#my_dark_mode_reset_colors').on('click', function() {

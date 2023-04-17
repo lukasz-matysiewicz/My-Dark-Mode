@@ -9,3 +9,8 @@
     flex-direction: row;
 }
 
+.mdm-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+}
