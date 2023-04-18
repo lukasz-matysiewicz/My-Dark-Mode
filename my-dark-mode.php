@@ -175,28 +175,28 @@ function my_dark_mode_switcher_section_callback(){
     //     echo $settings['switcher2_html'];
     // }
     ?>
-        <div>
+        <div class="no-switcher">
             <label>
                 <input type="radio" name="my_dark_mode_switcher" value="no_switcher" <?php checked($switcher, 'no_switcher'); ?>>
                 No Switcher (use custom button code)
             </label>
         </div>
-        <div>
+        <div class="switcher">
             <label>
                 <input type="radio" name="my_dark_mode_switcher" value="switcher1" <?php checked($switcher, 'switcher1'); ?>>
                 Switcher 1
             </label>
-            <div>
+            <div class="prev">
                 Preview:
                 <?php echo $settings['switcher1_html']; ?>
             </div>
         </div>
-        <div>
+        <div class="switcher">
             <label> 
                 <input type="radio" name="my_dark_mode_switcher" value="switcher2" <?php checked($switcher, 'switcher2'); ?>>
                 Switcher 2
             </label>
-            <div>
+            <div class="prev">
                 Preview:
                 <?php echo $settings['switcher2_html']; ?>
             </div>

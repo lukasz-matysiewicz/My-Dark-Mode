@@ -17,7 +17,7 @@ function my_dark_mode_colors_callback() {
     $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '#0060a9');
     $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '#0060a9');
     ?>
-    <div class="mdm-container">
+    <div class="mdm-container colors-group">
         <table>
             <tr>
                 <th><h2>Element</h2></th>
@@ -50,7 +50,6 @@ function my_dark_mode_colors_callback() {
                 <td id="col3"><input type="text" id="mdm_dark_btn_bg_color_picker" name="mdm_dark_btn_bg_color_picker" value="<?php echo esc_attr($dark_btn_bg_color); ?>"></td>
             </tr>
         </table>
-
         <button type="button" id="my_dark_mode_reset_colors" class="button">Reset Colors</button>
     </div>
     <script>

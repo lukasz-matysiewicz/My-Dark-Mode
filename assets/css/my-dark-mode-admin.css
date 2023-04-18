@@ -4,13 +4,49 @@
 .CodeMirror {
     max-width: 1200px;
 }
-.colors {
-    display: flex;
-    flex-direction: row;
-}
 
 .mdm-container {
     background: #fff;
     border-radius: 20px;
     padding: 30px;
+}
+
+.switcher {
+    padding: 20px 0;
+    display: flex;
+}
+
+.prev {
+    padding: 0 50px;
+}
+
+.mdm-container .button {
+    background: #fff;
+    border-radius: 10px;
+    padding: 5px 20px;
+}
+
+.mdm-container input[type=text] {
+    padding: 5px 20px;
+    border-radius: 15px;
+}
+.mdm-container.colors-group table {
+    display: flex;
+}
+.mdm-container.colors-group th, .mdm-container.colors-group td {
+    min-width: 33%;
+    vertical-align: top;
+}
+
+.wp-picker-container .wp-color-result.button {
+    min-height: 40px;
+    padding: 0 0 0 40px;
+}
+.wp-color-result-text {
+    background: #fff;
+    border-radius: 0 9px 9px 0;
+    padding: 5px 20px;
+}
+.mdm-container h3 {
+    margin: 0;
 }
