@@ -64,6 +64,20 @@ function my_dark_mode_settings_page() {
     </div>
     <?php
 }
+// function my_dark_mode_save_settings() {
+//     check_admin_referer('my_dark_mode_nonce');
+
+//     if (!current_user_can('manage_options')) {
+//         wp_die(__('You do not have sufficient permissions to access this page.'));
+//     }
+
+//     update_option('my_dark_mode_button_code', $_POST['my_dark_mode_button_code']);
+//     update_option('my_dark_mode_custom_css', $_POST['my_dark_mode_custom_css']);
+
+//     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
+//     exit;
+// }
+// add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings');
 
 function my_dark_mode_save_settings() {
     check_admin_referer('my_dark_mode_nonce');
@@ -72,8 +86,14 @@ function my_dark_mode_save_settings() {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
 
+    update_option('my_dark_mode_switcher', $_POST['my_dark_mode_switcher']);
     update_option('my_dark_mode_button_code', $_POST['my_dark_mode_button_code']);
     update_option('my_dark_mode_custom_css', $_POST['my_dark_mode_custom_css']);
+
+    update_option('switcher1_width', $_POST['switcher1_width']);
+    update_option('switcher1_height', $_POST['switcher1_height']);
+    update_option('switcher2_width', $_POST['switcher2_width']);
+    update_option('switcher2_height', $_POST['switcher2_height']);
 
     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
     exit;
@@ -100,23 +120,29 @@ function my_dark_mode_section_callback() {
 //global variables
 function get_dark_mode_settings() {
     $switcher = get_option('my_dark_mode_switcher', 'no_switcher');
-    $default_button_code = '<div class="mode-single-switch-border"><input type="checkbox" id="mode-switch-single" data-dark-mode-toggle aria-label="Toggle Dark Mode"><label for="mode-switch-single" class="mode-label-single"><div class="toggle"></div><div class="names"><p class="light">Light</p><p class="dark">Dark</p></div></label></div>';
+    $default_button_code = '<div class="mode-single-switch-border"><input type="checkbox" id="mode-switch-single" data-dark-mode-toggle aria-label="Toggle Dark Mode"><label for="mode-switch-single" class="mode-label-single"><div class="toggle"></div><div class="names"><div class="light">Light</div><div class="dark">Dark</div></div></label></div>';
     $button_code = get_option('my_dark_mode_button_code', $default_button_code);
+    
+    $switcher1_width = get_option('switcher1_width', 90);
+    $switcher1_height = get_option('switcher1_height', 40);
+
+    $switcher2_width = get_option('switcher2_width', 40);
+    $switcher2_height = get_option('switcher2_height', 40);
 
     $switcher1_html = '
-    <div class="mode-switch-border">
+    <div class="mode-switch-border" style="width:'.$switcher1_width.'px; height:'.$switcher1_height.'px;">
         <input type="checkbox" id="mode-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
         <label for="mode-switch" class="mode-label">
         <div class="toggle"></div>
         <div class="names">
-            <p class="light">Light</p>
-            <p class="dark">Dark</p>
+            <div class="light">Light</div>
+            <div class="dark">Dark</div>
         </div>
         </label>
     </div>';
 
     $switcher2_html = '
-    <div class="circle-switch-border">
+    <div class="circle-switch-border" style="width:'.$switcher2_width.'px; height:'.$switcher2_height.'px;">
         <input type="checkbox" id="circle-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
         <label for="circle-switch" class="circle-label">
         <div class="circle">
@@ -130,7 +156,11 @@ function get_dark_mode_settings() {
         'default_button_code' => $default_button_code,
         'button_code' => $button_code,
         'switcher1_html' => $switcher1_html,
-        'switcher2_html' => $switcher2_html
+        'switcher2_html' => $switcher2_html,
+        'switcher1_width' => $switcher1_width,
+        'switcher1_height' => $switcher1_height,
+        'switcher2_width' => $switcher2_width,
+        'switcher2_height' => $switcher2_height
     );
 }
 
@@ -154,6 +184,7 @@ function my_dark_mode_button_code_callback() {
     </script>
     <?php
 }
+
 
 function my_dark_mode_switcher_section_callback(){
     $settings = get_dark_mode_settings();
@@ -190,6 +221,10 @@ function my_dark_mode_switcher_section_callback(){
                 Preview:
                 <?php echo $settings['switcher1_html']; ?>
             </div>
+            <div>
+                Width: <input type="number" class="switch_input" name="switcher1_width" value="<?php echo $settings['switcher1_width']; ?>">
+                Height: <input type="number" class="switch_input" name="switcher1_height" value="<?php echo $settings['switcher1_height']; ?>">
+            </div>
         </div>
         <div class="switcher">
             <label> 
@@ -200,6 +235,10 @@ function my_dark_mode_switcher_section_callback(){
                 Preview:
                 <?php echo $settings['switcher2_html']; ?>
             </div>
+            <div>
+                Width: <input type="number" class="switch_input" name="switcher2_width" value="<?php echo $settings['switcher2_width']; ?>">
+                Height: <input type="number" class="switch_input" name="switcher2_height" value="<?php echo $settings['switcher2_height']; ?>">
+            </div>
         </div>
     </div>
 <?php
@@ -209,27 +248,26 @@ function my_dark_mode_logo_callback() {
     $light_logo = get_option('my_dark_mode_light_logo', '');
     $dark_logo = get_option('my_dark_mode_dark_logo', '');
     ?>
-    <div class="mdm-container">
-        <div>
+    <div class="mdm-container logo-upload-container">
+        <div class="logo-upload">
             <input type="button" class="button" id="my_dark_mode_light_logo_button" value="Upload Light Logo">
             <input type="hidden" id="my_dark_mode_light_logo" name="my_dark_mode_light_logo" value="<?php echo esc_attr($light_logo); ?>">
+            <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
+                <?php if (!empty($light_logo)): ?>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
+                    <img src="<?php echo esc_url($light_logo); ?>">
+                <?php endif; ?>
+            </div>
         </div>
-        <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
-            <?php if (!empty($light_logo)): ?>
-                <img src="<?php echo esc_url($light_logo); ?>" style="max-width: 100px;">
-                <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
-            <?php endif; ?>
-        </div>
-        <br>
-        <div>
+        <div class="logo-upload">
             <input type="button" class="button" id="my_dark_mode_dark_logo_button" value="Upload Dark Logo">
             <input type="hidden" id="my_dark_mode_dark_logo" name="my_dark_mode_dark_logo" value="<?php echo esc_attr($dark_logo); ?>">
+            <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
+                <?php if (!empty($dark_logo)): ?>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
+                    <img src="<?php echo esc_url($dark_logo); ?>">
+                <?php endif; ?>
         </div>
-        <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
-            <?php if (!empty($dark_logo)): ?>
-                <img src="<?php echo esc_url($dark_logo); ?>" style="max-width: 100px;">
-                <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
-            <?php endif; ?>
         </div>
     </div>
 
@@ -291,8 +329,7 @@ function my_dark_mode_logo_callback() {
     </script>
     <?php
 }
-register_setting('my_dark_mode', 'my_dark_mode_light_logo');
-register_setting('my_dark_mode', 'my_dark_mode_dark_logo');
+
 
 function replace_default_logo_with_custom_logo() {
     $light_logo_url = get_option('my_dark_mode_light_logo', '');
@@ -346,17 +383,24 @@ add_action('wp_footer', 'replace_default_logo_with_custom_logo');
 function my_dark_mode_settings_init() {
     register_setting('my_dark_mode', 'my_dark_mode_button_code');
     register_setting('my_dark_mode', 'my_dark_mode_switcher');
+    register_setting('my_dark_mode', 'my_dark_mode_custom_css');
+    register_setting('my_dark_mode', 'my_dark_mode_light_logo');
+    register_setting('my_dark_mode', 'my_dark_mode_dark_logo');
+    register_setting('my_dark_mode', 'switcher1_width');
+    register_setting('my_dark_mode', 'switcher1_height');
+    register_setting('my_dark_mode', 'switcher2_width');
+    register_setting('my_dark_mode', 'switcher2_height');
     //list of fields
     require_once plugin_dir_path(__FILE__) . 'my-dark-mode-fields.php';
     
 }
 add_action('admin_init', 'my_dark_mode_settings_init');
-register_setting('my_dark_mode', 'my_dark_mode_custom_css');
+
 
 
 
 // Create a shortcode for the dark mode toggle button
-function my_dark_mode_toggle_button_shortcode() {
+function my_dark_mode_toggle_button_shortcode($atts) {
     $settings = get_dark_mode_settings();
     $switcher = $settings['switcher'];
     $button_code = $settings['button_code'];
