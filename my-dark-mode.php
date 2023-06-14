@@ -216,6 +216,7 @@ function my_dark_mode_switcher_section_callback(){
     $button_code = $settings['button_code'];
     ?> 
     <div class="mdm-container">
+        <p class=switcher-info>To use dark mode button on your website use <strong>widget</strong> or this shortcode: <strong>[my_dark_mode_toggle_button]</strong></p>
     <!-- <div>
         Current button look:
     </div> -->

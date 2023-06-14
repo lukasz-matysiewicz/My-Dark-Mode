@@ -12,7 +12,7 @@ function my_dark_mode_license_callback() {
 
     // Start the HTML output
     ?>
-    <div id="mdm-container">
+    <div class="mdm-container">
         <!-- License input and status -->
         <div>
             <input id="my_dark_mode_license" name="my_dark_mode_license" type="text" value="<?php echo esc_attr($license); ?>" placeholder="Enter License" />
@@ -21,8 +21,8 @@ function my_dark_mode_license_callback() {
 
         <!-- Buttons -->
         <div>
-            <input type="button" id="add-license-button" value="Add License" />
-            <input type="button" id="remove-license-button" value="Remove License" />
+            <input type="button" id="add-license-button" class="button" value="Add License" />
+            <input type="button" id="remove-license-button" class="button" value="Remove License" />
         </div>
 
         <!-- Result -->

@@ -13,11 +13,17 @@ window.checkAndSaveLicense = function() {
             nonce: my_dark_mode_vars.nonce 
         },
         success: function(response) {
+            //console.log("Response: " + response);  // NEW
             jQuery('#license-check-result').text(response);
-            var status = response === 'The license is valid.' ? 'Active' : 'Not Active';
-            jQuery('#license-status').text(status);
-        
+            var status = response.trim() === 'The license is valid.' ? 'Active' : 'Not Active';
+            //console.log("Status: " + status);  // NEW
+            
+            var $licenseStatus = jQuery('#license-status');
+            $licenseStatus.text(status);
+
             if(status === 'Active'){
+                $licenseStatus.removeClass('license-inactive').addClass('license-active');
+
                 // Save the license key
                 jQuery.ajax({
                     type: 'POST',
@@ -42,6 +48,8 @@ window.checkAndSaveLicense = function() {
                 myDarkModeEditor.codemirror.setOption('readOnly', false);
                 customCssEditor.codemirror.setOption('readOnly', false);
             } else {
+                $licenseStatus.removeClass('license-active').addClass('license-inactive');
+
                 jQuery('.premium').css('opacity', '0.5');
                 jQuery('.premium-value').prop('disabled', true);
 
@@ -62,10 +70,6 @@ window.checkAndSaveLicense = function() {
 
 
 
-
-
-
-
 window.removeLicense = function() {
     var nonce = jQuery('#my_dark_mode_nonce_field').val();
 
@@ -80,13 +84,18 @@ window.removeLicense = function() {
             jQuery('#license-check-result').text(response);
             jQuery('#my_dark_mode_license').val('');  // Clear the license input
             jQuery('#license-status').text('Not Active');  // Update the license status
-            checkAndSaveLicense(); 
+            checkAndSaveLicense();
+
+            // Set CodeMirror instances to be read-only
+            myDarkModeEditor.codemirror.setOption('readOnly', 'nocursor');
+            customCssEditor.codemirror.setOption('readOnly', 'nocursor');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             jQuery('#license-check-result').text('An error occurred while removing the license.');
         }
     });
 }
+
 
 
 window.saveLicense = function(license) {

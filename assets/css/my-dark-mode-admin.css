@@ -119,3 +119,23 @@ input.switch_input {
     color: orange;
     font-weight: bolder;
 }
+input#my_dark_mode_license {
+    min-width: 350px;
+}
+span#license-status {
+    padding-left: 20px;
+}
+.license-inactive {
+    color: red;
+    font-weight: bold;
+}   
+.license-active {
+    color: green;
+    font-weight: bold;
+}   
+#add-license-button, #remove-license-button {
+    margin: 20px 20px 20px 0;
+}
+.switcher-info {
+    padding-bottom: 20px;
+}
