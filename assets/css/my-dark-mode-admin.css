@@ -103,3 +103,19 @@ input.switch_input {
     height: 50px;
     width: 100px;
 }
+.premium-wrapper {
+    position: relative;
+}
+.premium {
+    opacity: 0.5;
+}
+.premium-label {
+    position: absolute;
+    top: 60px;
+    left: 0%;
+    z-index: 12;
+    font-size: 1.6rem;
+    transform: rotate(-5deg);
+    color: orange;
+    font-weight: bolder;
+}

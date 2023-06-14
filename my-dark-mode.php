@@ -20,8 +20,29 @@ function my_dark_mode_enqueue_scripts() {
     wp_enqueue_style('my-dark-mode-switchers-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
 
     wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
+    
 }
-add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
+add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
+
+function my_dark_mode_enqueue_admin_scripts($hook) {
+    if ('toplevel_page_my-dark-mode' !== $hook) {
+        return;
+    }
+
+    // Enqueue the custom admin CSS file
+    wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode-admin.css', array(), '1.0', 'all');
+
+    // Enqueue the custom admin JS file
+    wp_enqueue_code_editor(array('type' => 'text/html'));
+    wp_enqueue_script('my-dark-mode-admin-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-admin.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('my-dark-mode-validate-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-validate.js', array('jquery'), '1.0', true);
+    wp_localize_script('my-dark-mode-validate-js', 'my_dark_mode_vars', array(
+        'nonce' => wp_create_nonce('my_dark_mode_nonce'),
+    ));
+    
+}
+add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
+
 
 // create setting page
 function my_dark_mode_admin_menu() {
@@ -89,6 +110,7 @@ function my_dark_mode_save_settings() {
     update_option('my_dark_mode_switcher', $_POST['my_dark_mode_switcher']);
     update_option('my_dark_mode_button_code', $_POST['my_dark_mode_button_code']);
     update_option('my_dark_mode_custom_css', $_POST['my_dark_mode_custom_css']);
+    update_option('my_dark_mode_license', $_POST['my_dark_mode_license']);
 
     update_option('switcher1_width', $_POST['switcher1_width']);
     update_option('switcher1_height', $_POST['switcher1_height']);
@@ -104,9 +126,10 @@ add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings'
 function my_dark_mode_custom_css_callback() {
     $custom_css = get_option('my_dark_mode_custom_css');
     ?>
-    <div class="mdm-container">
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container premium">
     <div>Use this prefix to target elements: <strong>body[my-dark-mode='light'].your_class</strong> or <strong>body[my-dark-mode='dark'].your_class</strong></div>
-    <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>
+    <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>  
     </div>
     <?php
 }
@@ -169,7 +192,8 @@ function my_dark_mode_button_code_callback() {
     $button_code = $settings['button_code'];
     $default_button_code = $settings['default_button_code'];
     ?>
-    <div class="mdm-container">
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container premium">
     <div><strong>IMPORTANT:</strong> please use button attribute: <strong>data-dark-mode-toggle</strong></br></br>
     To use dark mode button on your website use <strong>widget</strong> or this shortcode: <strong>[my_dark_mode_toggle_button]</strong></br></br>If you are not fluent with html,css and need help customize button please use this customizer: <a href="https://codebeautify.org/html-button-generator">https://codebeautify.org/html-button-generator</a></div>
     <textarea id="my_dark_mode_button_code" name="my_dark_mode_button_code" rows="5" cols="50"><?php echo esc_textarea($button_code); ?></textarea>
@@ -208,7 +232,7 @@ function my_dark_mode_switcher_section_callback(){
     ?>
         <div class="no-switcher">
             <label>
-                <input type="radio" name="my_dark_mode_switcher" value="no_switcher" <?php checked($switcher, 'no_switcher'); ?>>
+                <input class="premium-value" type="radio" name="my_dark_mode_switcher" value="no_switcher" disabled <?php checked($switcher, 'no_switcher'); ?>>
                 No Switcher (use custom button code)
             </label>
         </div>
@@ -248,23 +272,24 @@ function my_dark_mode_logo_callback() {
     $light_logo = get_option('my_dark_mode_light_logo', '');
     $dark_logo = get_option('my_dark_mode_dark_logo', '');
     ?>
-    <div class="mdm-container logo-upload-container">
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container logo-upload-container premium">
         <div class="logo-upload">
-            <input type="button" class="button" id="my_dark_mode_light_logo_button" value="Upload Light Logo">
+            <input type="button" class="button premium-value" id="my_dark_mode_light_logo_button" value="Upload Light Logo" disabled>
             <input type="hidden" id="my_dark_mode_light_logo" name="my_dark_mode_light_logo" value="<?php echo esc_attr($light_logo); ?>">
             <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
                 <?php if (!empty($light_logo)): ?>
-                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;" disabled>X</button>
                     <img src="<?php echo esc_url($light_logo); ?>">
                 <?php endif; ?>
             </div>
         </div>
         <div class="logo-upload">
-            <input type="button" class="button" id="my_dark_mode_dark_logo_button" value="Upload Dark Logo">
+            <input type="button" class="button premium-value" id="my_dark_mode_dark_logo_button" value="Upload Dark Logo" disabled>
             <input type="hidden" id="my_dark_mode_dark_logo" name="my_dark_mode_dark_logo" value="<?php echo esc_attr($dark_logo); ?>">
             <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
                 <?php if (!empty($dark_logo)): ?>
-                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;" disabled>X</button>
                     <img src="<?php echo esc_url($dark_logo); ?>">
                 <?php endif; ?>
         </div>
@@ -390,6 +415,7 @@ function my_dark_mode_settings_init() {
     register_setting('my_dark_mode', 'switcher1_height');
     register_setting('my_dark_mode', 'switcher2_width');
     register_setting('my_dark_mode', 'switcher2_height');
+    register_setting('my_dark_mode', 'my_dark_mode_license');
     //list of fields
     require_once plugin_dir_path(__FILE__) . 'my-dark-mode-fields.php';
     
@@ -421,23 +447,8 @@ add_shortcode('my_dark_mode_toggle_button', 'my_dark_mode_toggle_button_shortcod
 //Added button to widgets area
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-widget.php';
 
-//Add code editor instead of textarea
-function my_dark_mode_enqueue_admin_scripts($hook) {
-    if ('toplevel_page_my-dark-mode' !== $hook) {
-        return;
-    }
-
-    // Enqueue the custom admin CSS file
-    wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode-admin.css', array(), '1.0', 'all');
-
-    // Enqueue the custom admin JS file
-    wp_enqueue_code_editor(array('type' => 'text/html'));
-    wp_enqueue_script('my-dark-mode-admin-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-admin.js', array('jquery'), '1.0', true);
-
-
-}
-add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
-
-
 //Add color pickers
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-colors.php';
+
+//Validate license
+require_once plugin_dir_path(__FILE__) . 'my-dark-mode-license.php';

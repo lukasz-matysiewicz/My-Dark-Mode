@@ -6,16 +6,16 @@ function my_dark_mode_colors_callback() {
     $link_text_color_class = get_option('mdm_link_text_color_class', 'a');
     $btn_bg_color_class = get_option('mdm_btn_bg_color_class', 'button');
 
-    $light_bg_color = get_option('mdm_light_bg_color_picker', '#fff');
-    $dark_bg_color = get_option('mdm_dark_bg_color_picker', '#000');
-    $light_heading_color = get_option('mdm_light_heading_color_picker', '#0060a9');
-    $dark_heading_color = get_option('mdm_dark_heading_color_picker', '#0060a9');
-    $light_text_color = get_option('mdm_light_text_color_picker', '#000');
-    $dark_text_color = get_option('mdm_dark_text_color_picker', '#fff');
-    $light_link_text_color = get_option('mdm_light_link_text_color_picker', '#0060a9');
-    $dark_link_text_color = get_option('mdm_dark_link_text_color_picker', '#0060a9');
-    $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '#0060a9');
-    $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '#0060a9');
+    $light_bg_color = get_option('mdm_light_bg_color_picker', '');
+    $dark_bg_color = get_option('mdm_dark_bg_color_picker', '');
+    $light_heading_color = get_option('mdm_light_heading_color_picker', '');
+    $dark_heading_color = get_option('mdm_dark_heading_color_picker', '');
+    $light_text_color = get_option('mdm_light_text_color_picker', '');
+    $dark_text_color = get_option('mdm_dark_text_color_picker', '');
+    $light_link_text_color = get_option('mdm_light_link_text_color_picker', '');
+    $dark_link_text_color = get_option('mdm_dark_link_text_color_picker', '');
+    $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '');
+    $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '');
     ?>
     <div class="mdm-container colors-group">
         <table>
@@ -42,7 +42,7 @@ function my_dark_mode_colors_callback() {
             <tr class="colors">
                 <td id="col1"><h3>Link Text Color</h3><input type="text" id="mdm_link_text_color_class" name="mdm_link_text_color_class" value="<?php echo esc_attr($link_text_color_class); ?>"></td>
                 <td id="col2"><input type="text" id="mdm_light_link_text_color_picker" name="mdm_light_link_text_color_picker" value="<?php echo esc_attr($light_link_text_color); ?>"></td>
-                <td id="col3"><input type="text" id="mdm_link_dark_text_color_picker" name="mdm_dark_link_text_color_picker" value="<?php echo esc_attr($dark_link_text_color); ?>"></td>
+                <td id="col3"><input type="text" id="mdm_dark_link_text_color_picker" name="mdm_dark_link_text_color_picker" value="<?php echo esc_attr($dark_link_text_color); ?>"></td>
             </tr>
             <tr class="colors">
                 <td id="col1"><h3>Button Background Color</h3><input type="text" id="mdm_btn_bg_color_class" name="mdm_btn_bg_color_class" value="<?php echo esc_attr($btn_bg_color_class); ?>"></td>
@@ -57,15 +57,15 @@ function my_dark_mode_colors_callback() {
             $('#my_dark_mode_reset_colors').on('click', function() {
                 // Reset color pickers to default values
                 $('#mdm_light_bg_color_picker').wpColorPicker('color', '#fff');
-                $('#mdm_dark_bg_color_picker').wpColorPicker('color', '#000');
-                $('#mdm_light_heading_color_picker').wpColorPicker('color', '#0060a9');
-                $('#mdm_dark_heading_color_picker').wpColorPicker('color', '#0060a9');
-                $('#mdm_light_text_color_picker').wpColorPicker('color', '#000');
+                $('#mdm_dark_bg_color_picker').wpColorPicker('color', '#333');
+                $('#mdm_light_heading_color_picker').wpColorPicker('color', '#006faf');
+                $('#mdm_dark_heading_color_picker').wpColorPicker('color', '#c6751d');
+                $('#mdm_light_text_color_picker').wpColorPicker('color', '#333');
                 $('#mdm_dark_text_color_picker').wpColorPicker('color', '#fff');
-                $('#mdm_light_link_text_color_picker').wpColorPicker('color', '#0060a9');
-                $('#mdm_dark_link_text_color_picker').wpColorPicker('color', '#0060a9');
-                $('#mdm_light_btn_bg_color_picker').wpColorPicker('color', '#0060a9');
-                $('#mdm_dark_btn_bg_color_picker').wpColorPicker('color', '#0060a9');
+                $('#mdm_light_link_text_color_picker').wpColorPicker('color', '#006faf');
+                $('#mdm_dark_link_text_color_picker').wpColorPicker('color', '#c6751d');
+                $('#mdm_light_btn_bg_color_picker').wpColorPicker('color', '#006faf');
+                $('#mdm_dark_btn_bg_color_picker').wpColorPicker('color', '#c6751d');
 
                 // Reset class input fields to default values
                 $('#mdm_bg_color_class').val('body');
@@ -108,15 +108,15 @@ function my_dark_mode_generate_css() {
     $btn_bg_color_class = get_option('mdm_btn_bg_color_class', 'button');
 
     $light_bg_color = get_option('mdm_light_bg_color_picker', '#fff');
-    $dark_bg_color = get_option('mdm_dark_bg_color_picker', '#000');
-    $light_heading_color = get_option('mdm_light_heading_color_picker', '#0060a9');
-    $dark_heading_color = get_option('mdm_dark_heading_color_picker', '#0060a9');
-    $light_text_color = get_option('mdm_light_text_color_picker', '#000');
+    $dark_bg_color = get_option('mdm_dark_bg_color_picker', '#333');
+    $light_heading_color = get_option('mdm_light_heading_color_picker', '#006faf');
+    $dark_heading_color = get_option('mdm_dark_heading_color_picker', '#c6751d');
+    $light_text_color = get_option('mdm_light_text_color_picker', '#333');
     $dark_text_color = get_option('mdm_dark_text_color_picker', '#fff');
-    $light_link_text_color = get_option('mdm_light_link_text_color_picker', '#0060a9');
-    $dark_link_text_color = get_option('mdm_dark_link_text_color_picker', '#0060a9');
-    $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '#0060a9');
-    $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '#0060a9');
+    $light_link_text_color = get_option('mdm_light_link_text_color_picker', '#006faf');
+    $dark_link_text_color = get_option('mdm_dark_link_text_color_picker', '#c6751d');
+    $light_btn_bg_color = get_option('mdm_light_btn_bg_color_picker', '#006faf');
+    $dark_btn_bg_color = get_option('mdm_dark_btn_bg_color_picker', '#c6751d');
 
 
     $css = "
