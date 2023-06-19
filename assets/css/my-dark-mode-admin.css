@@ -103,3 +103,39 @@ input.switch_input {
     height: 50px;
     width: 100px;
 }
+.premium-wrapper {
+    position: relative;
+}
+.premium {
+    opacity: 0.5;
+}
+.premium-label {
+    position: absolute;
+    top: 60px;
+    left: 0%;
+    z-index: 12;
+    font-size: 1.6rem;
+    transform: rotate(-5deg);
+    color: orange;
+    font-weight: bolder;
+}
+input#my_dark_mode_license {
+    min-width: 350px;
+}
+span#license-status {
+    padding-left: 20px;
+}
+.license-inactive {
+    color: red;
+    font-weight: bold;
+}   
+.license-active {
+    color: green;
+    font-weight: bold;
+}   
+#add-license-button, #remove-license-button {
+    margin: 20px 20px 20px 0;
+}
+.switcher-info {
+    padding-bottom: 20px;
+}
