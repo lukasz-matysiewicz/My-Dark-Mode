@@ -22,27 +22,6 @@ function my_dark_mode_enqueue_scripts() {
     wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
     
 }
-add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
-
-function my_dark_mode_enqueue_admin_scripts($hook) {
-    if ('toplevel_page_my-dark-mode' !== $hook) {
-        return;
-    }
-
-    // Enqueue the custom admin CSS file
-    wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode-admin.css', array(), '1.0', 'all');
-
-    // Enqueue the custom admin JS file
-    wp_enqueue_code_editor(array('type' => 'text/html'));
-    wp_enqueue_script('my-dark-mode-admin-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-admin.js', array('jquery'), '1.0', true);
-    wp_enqueue_script('my-dark-mode-validate-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-validate.js', array('jquery'), '1.0', true);
-    wp_localize_script('my-dark-mode-validate-js', 'my_dark_mode_vars', array(
-        'nonce' => wp_create_nonce('my_dark_mode_nonce'),
-    ));
-    
-}
-add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
-
 
 // create setting page
 function my_dark_mode_admin_menu() {
@@ -85,20 +64,6 @@ function my_dark_mode_settings_page() {
     </div>
     <?php
 }
-// function my_dark_mode_save_settings() {
-//     check_admin_referer('my_dark_mode_nonce');
-
-//     if (!current_user_can('manage_options')) {
-//         wp_die(__('You do not have sufficient permissions to access this page.'));
-//     }
-
-//     update_option('my_dark_mode_button_code', $_POST['my_dark_mode_button_code']);
-//     update_option('my_dark_mode_custom_css', $_POST['my_dark_mode_custom_css']);
-
-//     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
-//     exit;
-// }
-// add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings');
 
 function my_dark_mode_save_settings() {
     check_admin_referer('my_dark_mode_nonce');
@@ -447,6 +412,27 @@ add_shortcode('my_dark_mode_toggle_button', 'my_dark_mode_toggle_button_shortcod
 
 //Added button to widgets area
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-widget.php';
+
+//Add code editor instead of textarea
+function my_dark_mode_enqueue_admin_scripts($hook) {
+    if ('toplevel_page_my-dark-mode' !== $hook) {
+        return;
+    }
+
+    // Enqueue the custom admin CSS file
+    wp_enqueue_style('my-dark-mode-admin-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode-admin.css', array(), '1.0', 'all');
+
+    // Enqueue the custom admin JS file
+    wp_enqueue_code_editor(array('type' => 'text/html'));
+    wp_enqueue_script('my-dark-mode-admin-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-admin.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('my-dark-mode-validate-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-validate.js', array('jquery'), '1.0', true);
+    wp_localize_script('my-dark-mode-validate-js', 'my_dark_mode_vars', array(
+        'nonce' => wp_create_nonce('my_dark_mode_nonce'),
+    ));
+
+}
+add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
+
 
 //Add color pickers
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-colors.php';
