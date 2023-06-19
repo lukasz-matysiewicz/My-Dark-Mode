@@ -20,8 +20,8 @@ function my_dark_mode_enqueue_scripts() {
     wp_enqueue_style('my-dark-mode-switchers-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
 
     wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
-    
 }
+add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
 
 // create setting page
 function my_dark_mode_admin_menu() {
