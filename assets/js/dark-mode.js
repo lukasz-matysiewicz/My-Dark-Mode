@@ -8,11 +8,11 @@ jQuery(document).ready(function($) {
 
     // Toggle dark mode on button click
     $('[data-dark-mode-toggle]').on('click', function() {
-        if ($('body').attr('my-dark-mode') === 'dark') {
-            $('body').attr('my-dark-mode', 'light');
+        if ($('body').attr('my-dark-mode') === 'light') {
+            $('body').attr('my-dark-mode', 'dark');
             localStorage.removeItem('dark-mode');
         } else {
-            $('body').attr('my-dark-mode', 'dark');
+            $('body').attr('my-dark-mode', 'light');
             localStorage.setItem('dark-mode', 'enabled');
         }
     });

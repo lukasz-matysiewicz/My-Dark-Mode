@@ -10,9 +10,7 @@ License: GPL2
 */
 
 
-//register assets
 function my_dark_mode_enqueue_scripts() {
-
     // Enqueue the dark-mode.css file
     wp_enqueue_style('my-dark-mode-css', plugin_dir_url(__FILE__) . 'assets/css/dark-mode.css', array(), '1.0', 'all');
 
@@ -93,7 +91,7 @@ function my_dark_mode_custom_css_callback() {
     ?>
     <div class="premium-label">Premium Feature</div>
     <div class="mdm-container premium">
-    <div>Use this prefix to target elements: <strong>body[my-dark-mode='light'].your_class</strong> or <strong>body[my-dark-mode='dark'].your_class</strong></div>
+    <div>Use this prefix to target elements: body[my-dark-mode='dark'].your_class</strong></div>
     <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>  
     </div>
     <?php
@@ -104,6 +102,7 @@ function my_dark_mode_section_callback() {
     <div>Use those fields to customize My Dark Mode Styles.</div>
     <?php
 }
+
 
 //global variables
 function get_dark_mode_settings() {
