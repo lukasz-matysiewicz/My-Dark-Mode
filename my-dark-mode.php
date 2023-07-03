@@ -244,7 +244,7 @@ function my_dark_mode_logo_callback() {
             <input type="hidden" id="my_dark_mode_light_logo" name="my_dark_mode_light_logo" value="<?php echo esc_attr($light_logo); ?>">
             <div id="my_dark_mode_light_logo_preview" style="display: inline-block; vertical-align: top;">
                 <?php if (!empty($light_logo)): ?>
-                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;" disabled>X</button>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_light_logo" style="display: block;">X</button>
                     <img src="<?php echo esc_url($light_logo); ?>">
                 <?php endif; ?>
             </div>
@@ -254,7 +254,7 @@ function my_dark_mode_logo_callback() {
             <input type="hidden" id="my_dark_mode_dark_logo" name="my_dark_mode_dark_logo" value="<?php echo esc_attr($dark_logo); ?>">
             <div id="my_dark_mode_dark_logo_preview" style="display: inline-block; vertical-align: top;">
                 <?php if (!empty($dark_logo)): ?>
-                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;" disabled>X</button>
+                    <button type="button" class="remove_image_button" data-target-id="my_dark_mode_dark_logo" style="display: block;">X</button>
                     <img src="<?php echo esc_url($dark_logo); ?>">
                 <?php endif; ?>
         </div>

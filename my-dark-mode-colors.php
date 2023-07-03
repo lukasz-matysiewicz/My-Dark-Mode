@@ -58,7 +58,7 @@ function my_dark_mode_colors_callback() {
 
                 // Reset class input fields to default values
                 $('#mdm_bg_color_class').val('#content');
-                $('#mdm_heading_color_class').val('h1,h2,h3,h4,h5,h6');
+                $('#mdm_heading_color_class').val('h1, body[my-dark-mode=\'dark\'] h2,  body[my-dark-mode=\'dark\'] h3, body[my-dark-mode=\'dark\'] h4, body[my-dark-mode=\'dark\'] h5, body[my-dark-mode=\'dark\'] h6');
                 $('#mdm_text_color_class').val('#content');
                 $('#mdm_link_text_color_class').val('a');
                 $('#mdm_btn_bg_color_class').val('button');
@@ -106,7 +106,7 @@ add_action('admin_init', 'my_dark_mode_register_settings');
 
 function my_dark_mode_generate_css() {
     $bg_color_class = get_option('mdm_bg_color_class', '#content');
-    $heading_color_class = get_option('mdm_heading_color_class', 'h1,h2,h3,h4,h5,h6');
+    $heading_color_class = get_option('mdm_heading_color_class', 'h1, body[my-dark-mode=\'dark\'] h2,  body[my-dark-mode=\'dark\'] h3, body[my-dark-mode=\'dark\'] h4, body[my-dark-mode=\'dark\'] h5, body[my-dark-mode=\'dark\'] h6');
     $text_color_class = get_option('mdm_text_color_class', 'body');
     $link_text_color_class = get_option('mdm_link_text_color_class', 'a');
     $btn_bg_color_class = get_option('mdm_btn_bg_color_class', 'button');
