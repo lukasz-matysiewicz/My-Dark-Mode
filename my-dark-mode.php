@@ -344,11 +344,11 @@ function replace_default_logo_with_custom_logo() {
         document.addEventListener('DOMContentLoaded', function() {
             var logoImage = document.querySelector('.custom-logo');
             var originalLogoSrc = logoImage ? logoImage.src : '';
-            var body = document.querySelector('body');
+            var html = document.documentElement;
 
             function updateLogoSrc() {
                 if (logoImage) {
-                    var darkMode = body.getAttribute('my-dark-mode') === 'dark';
+                    var darkMode = html.getAttribute('my-dark-mode') === 'dark';
 
                     if (darkMode && '<?php echo esc_url($dark_logo_url); ?>' !== '') {
                         logoImage.src = '<?php echo esc_url($dark_logo_url); ?>';
@@ -371,13 +371,14 @@ function replace_default_logo_with_custom_logo() {
                     });
                 });
 
-                observer.observe(body, { attributes: true });
+                observer.observe(html, { attributes: true });
             }
         });
         </script>
         <?php
     }
 }
+
 add_action('wp_footer', 'replace_default_logo_with_custom_logo');
 
 
