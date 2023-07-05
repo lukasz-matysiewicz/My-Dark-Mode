@@ -21,6 +21,19 @@ function my_dark_mode_enqueue_scripts() {
 }
 add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
 
+function my_custom_head_script() {
+    ?>
+    <script>
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            document.documentElement.setAttribute('my-dark-mode', 'dark');
+            } else {
+            document.documentElement.setAttribute('my-dark-mode', 'light');
+            }
+    </script>
+    <?php
+}
+add_action('wp_head', 'my_custom_head_script');
+
 // create setting page
 function my_dark_mode_admin_menu() {
     add_menu_page(
@@ -91,7 +104,7 @@ function my_dark_mode_custom_css_callback() {
     ?>
     <div class="premium-label">Premium Feature</div>
     <div class="mdm-container premium">
-    <div>Use this prefix to target elements: body[my-dark-mode='dark'].your_class</strong></div>
+    <div>Use this prefix to target elements: html[my-dark-mode='dark'] .your_class</strong></div>
     <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>  
     </div>
     <?php
