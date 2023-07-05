@@ -9,18 +9,6 @@ Author URI: https://matysiewicz.studio
 License: GPL2
 */
 
-
-function my_dark_mode_enqueue_scripts() {
-    // Enqueue the dark-mode.css file
-    wp_enqueue_style('my-dark-mode-css', plugin_dir_url(__FILE__) . 'assets/css/dark-mode.css', array(), '1.0', 'all');
-
-    // Enqueue the switchers.css file for both admin and front-end
-    wp_enqueue_style('my-dark-mode-switchers-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
-
-    wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
-}
-add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
-
 function my_custom_head_script() {
     ?>
     <script>
@@ -32,7 +20,18 @@ function my_custom_head_script() {
     </script>
     <?php
 }
-add_action('wp_head', 'my_custom_head_script');
+add_action('wp_head', 'my_custom_head_script', 1);
+
+function my_dark_mode_enqueue_scripts() {
+    // Enqueue the dark-mode.css file
+    wp_enqueue_style('my-dark-mode-css', plugin_dir_url(__FILE__) . 'assets/css/dark-mode.css', array(), '1.0', 'all');
+
+    // Enqueue the switchers.css file for both admin and front-end
+    wp_enqueue_style('my-dark-mode-switchers-css', plugin_dir_url(__FILE__) . 'assets/css/switchers.css', array(), '1.0', 'all');
+
+    wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/dark-mode.js', array('jquery'), '1.0', true);
+}
+add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
 
 // create setting page
 function my_dark_mode_admin_menu() {
