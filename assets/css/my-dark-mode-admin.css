@@ -58,38 +58,6 @@
 button#my_dark_mode_reset_colors {
     margin-top: 40px;
 }
-#my_dark_mode_dark_logo_preview, #my_dark_mode_light_logo_preview {
-    width: 200px;
-    position: relative;
-}
-.logo-upload-container {
-    display: flex;
-    gap: 150px;
-}
-.logo-upload {
-    display: flex;
-    flex-direction: column;
-    min-width: 200px;
-}
-#my_dark_mode_dark_logo_button, #my_dark_mode_light_logo_button {
-    margin-bottom: 50px;
-}
-.remove_image_button {
-    position: absolute;
-    right: -15px;
-    top: -30px;
-    border: 1px solid #2271b1;
-    border-radius: 10px;
-    height: 30px;
-    width: 30px;
-    background: #fff;
-    color: #2271b1;
-    transition: all 0.3s;
-}
-.remove_image_button:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-}
 .button-primary {
     position: fixed;
     right: 50px;
@@ -102,39 +70,6 @@ input.switch_input {
     border-radius: 15px;
     height: 50px;
     width: 100px;
-}
-.premium-wrapper {
-    position: relative;
-}
-.premium {
-    opacity: 0.5;
-}
-.premium-label {
-    position: absolute;
-    top: 60px;
-    left: 0%;
-    z-index: 12;
-    font-size: 1.6rem;
-    transform: rotate(-5deg);
-    color: orange;
-    font-weight: bolder;
-}
-input#my_dark_mode_license {
-    min-width: 350px;
-}
-span#license-status {
-    padding-left: 20px;
-}
-.license-inactive {
-    color: red;
-    font-weight: bold;
-}   
-.license-active {
-    color: green;
-    font-weight: bold;
-}   
-#add-license-button, #remove-license-button {
-    margin: 20px 20px 20px 0;
 }
 .switcher-info {
     padding-bottom: 20px;
