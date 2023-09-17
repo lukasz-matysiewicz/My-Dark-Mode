@@ -82,15 +82,26 @@ function my_dark_mode_save_settings() {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
 
-    update_option('my_dark_mode_switcher', $_POST['my_dark_mode_switcher']);
-    update_option('my_dark_mode_button_code', $_POST['my_dark_mode_button_code']);
-    update_option('my_dark_mode_custom_css', $_POST['my_dark_mode_custom_css']);
-    update_option('my_dark_mode_license', $_POST['my_dark_mode_license']);
+    update_option('my_dark_mode_switcher', intval($_POST['my_dark_mode_switcher']));
+    update_option('my_dark_mode_button_code', sanitize_text_field($_POST['my_dark_mode_button_code']));
+    update_option('my_dark_mode_custom_css', wp_strip_all_tags($_POST['my_dark_mode_custom_css']));
+    update_option('my_dark_mode_license', sanitize_text_field($_POST['my_dark_mode_license']));
 
-    update_option('switcher1_width', $_POST['switcher1_width']);
-    update_option('switcher1_height', $_POST['switcher1_height']);
-    update_option('switcher2_width', $_POST['switcher2_width']);
-    update_option('switcher2_height', $_POST['switcher2_height']);
+    if (is_numeric($_POST['switcher1_width'])) {
+        update_option('switcher1_width', $_POST['switcher1_width']);
+    }
+
+    if (is_numeric($_POST['switcher1_height'])) {
+        update_option('switcher1_height', $_POST['switcher1_height']);
+    }
+
+    if (is_numeric($_POST['switcher2_width'])) {
+        update_option('switcher2_width', $_POST['switcher2_width']);
+    }
+
+    if (is_numeric($_POST['switcher2_height'])) {
+        update_option('switcher2_height', $_POST['switcher2_height']);
+    }
 
     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
     exit;
@@ -99,15 +110,56 @@ add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings'
 
 
 function my_dark_mode_custom_css_callback() {
-    $custom_css = get_option('my_dark_mode_custom_css');
+    $raw_css = get_option('my_dark_mode_custom_css');
+
     ?>
     <div class="premium-label">Premium Feature</div>
     <div class="mdm-container premium">
-    <div>Use this prefix to target elements: html[my-dark-mode='dark'] .your_class</strong></div>
-    <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($custom_css); ?></textarea>  
+    <div>Prefix: <strong>html[my-dark-mode='dark']</strong> will be added automatically before your class just leave end of line with "{", attributes move to next line. </strong></div>
+    <textarea id="my_dark_mode_custom_css" name="my_dark_mode_custom_css" rows="5" cols="50"><?php echo esc_textarea($raw_css); ?></textarea>  
     </div>
     <?php
 }
+
+function print_dark_mode_css() {
+    $raw_css = get_option('my_dark_mode_custom_css');
+    $custom_css = wrap_custom_css_with_dark_mode_selector($raw_css);
+    echo '<style>' . $custom_css . '</style>';
+}
+function wrap_custom_css_with_dark_mode_selector($css) {
+    $lines = explode("\n", trim($css));
+    $wrapped_css = "";
+    $rule_start = "";  // This will store the selector for the CSS rule
+    $rule_body = "";  // This will store the content of the CSS rule
+
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+
+        if ($trimmed) {
+            // If the line is the start of a rule.
+            if (substr($trimmed, -1) === '{') {
+                // If rule_body is not empty, then it's time to wrap the previous rule.
+                if ($rule_body) {
+                    $wrapped_css .= "html[my-dark-mode='dark'] " . $rule_start . " {" . $rule_body . "\n";
+                    $rule_body = "";  // Reset rule_body
+                }
+                $rule_start = substr($trimmed, 0, -1);  // Store the selector without the '{'
+            } else {
+                $rule_body .= $line . "\n";
+            }
+        }
+    }
+
+    // Handle the last rule if there's any.
+    if ($rule_body) {
+        $wrapped_css .= "html[my-dark-mode='dark'] " . $rule_start . " {" . $rule_body;
+    }
+
+    return $wrapped_css;
+}
+
+
+
 
 function my_dark_mode_section_callback() {
     ?>

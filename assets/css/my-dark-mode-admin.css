@@ -30,9 +30,9 @@
     padding: 5px 20px;
     border-radius: 15px;
 }
-.mdm-container.colors-group table {
+/* .mdm-container.colors-group table {
     display: flex;
-}
+} */
 .mdm-container.colors-group th, .mdm-container.colors-group td {
     min-width: 350px;
     vertical-align: middle;
