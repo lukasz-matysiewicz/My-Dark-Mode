@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
+
 function my_dark_mode_colors_callback() {
     $bg_color_class = get_option('mdm_bg_color_class', 'body');
     $dark_bg_att = get_option('mdm_dark_bg_color_att', 'background-color');
@@ -27,11 +32,12 @@ function my_dark_mode_colors_callback() {
                 
                     if ($color_class) {
                         echo '<tr class="colors">
-                                <td><input type="text" id="mdm_new_color_class_' . $i . '" name="mdm_new_color_class_' . $i . '" value="' . esc_attr($color_class) . '"></td>
-                                <td><input type="text" id="mdm_dark_new_color_att_' . $i . '" name="mdm_dark_new_color_att_' . $i . '" value="' . esc_attr($color_att) . '"></td>
-                                <td><input type="text" id="mdm_dark_new_color_picker_' . $i . '" name="mdm_dark_new_color_picker_' . $i . '" value="' . esc_attr($color_value) . '"></td>
+                                <td><input type="text" id="mdm_new_color_class_' . htmlspecialchars($i) . '" name="mdm_new_color_class_' . htmlspecialchars($i) . '" value="' . esc_attr($color_class) . '"></td>
+                                <td><input type="text" id="mdm_dark_new_color_att_' . htmlspecialchars($i) . '" name="mdm_dark_new_color_att_' . htmlspecialchars($i) . '" value="' . esc_attr($color_att) . '"></td>
+                                <td><input type="text" id="mdm_dark_new_color_picker_' . htmlspecialchars($i) . '" name="mdm_dark_new_color_picker_' . htmlspecialchars($i) . '" value="' . esc_attr($color_value) . '"></td>
                               </tr>';
                     }
+                    
                 }
                 ?>
             </tbody>
