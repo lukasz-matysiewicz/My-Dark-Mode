@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
+
 class My_Dark_Mode_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
@@ -9,10 +14,11 @@ class My_Dark_Mode_Widget extends WP_Widget {
     }
 
     public function widget($args, $instance) {
-        echo $args['before_widget'];
+        echo wp_kses_post($args['before_widget']);
         echo do_shortcode('[my_dark_mode_toggle_button]');
-        echo $args['after_widget'];
+        echo wp_kses_post($args['after_widget']);
     }
+    
 }
 
 function my_dark_mode_register_widget() {

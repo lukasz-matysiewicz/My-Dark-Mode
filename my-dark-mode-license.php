@@ -1,11 +1,15 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
+
 function my_dark_mode_license_callback() {
     // Retrieve the license from the database
     $license = get_option('my_dark_mode_license');
 
     // Get the license status
-    $license_status = get_license_status($license);
+    $license_status = my_dark_mode_get_license_status($license);
 
     // Nonce field
     $nonce = wp_create_nonce('my_dark_mode_nonce');
@@ -16,7 +20,7 @@ function my_dark_mode_license_callback() {
         <!-- License input and status -->
         <div>
             <input id="my_dark_mode_license" name="my_dark_mode_license" type="text" value="<?php echo esc_attr($license); ?>" placeholder="Enter License" />
-            <span id="license-status"><?php echo $license_status; ?></span>
+            <span id="license-status"><?php echo esc_html($license_status); ?></span>
         </div>
 
         <!-- Buttons -->
@@ -31,13 +35,13 @@ function my_dark_mode_license_callback() {
         </div>
 
         <!-- Nonce Field -->
-        <input type="hidden" id="my_dark_mode_nonce_field" value="<?php echo $nonce; ?>" />
+        <input type="hidden" id="my_dark_mode_nonce_field" value="<?php echo esc_attr($nonce); ?>" />
     </div>
     <?php
 }
 
 
-function get_license_status($license) {
+function my_dark_mode_get_license_status($license) {
     // Assume the license is invalid
     $status = 'Not Active';
 
@@ -62,9 +66,10 @@ function get_license_status($license) {
 }
 
 
-function check_license_ajax() {
+function my_dark_mode_check_license_ajax() {
     // Check nonce validity
-    check_ajax_referer('my_dark_mode_nonce', 'nonce');
+    check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
+
 
     // Retrieve the license from the request
     $license = sanitize_text_field($_POST['license']);
@@ -86,45 +91,54 @@ function check_license_ajax() {
     } else {
         $body = wp_remote_retrieve_body( $response );
         $data = json_decode( $body );
-        $is_valid = $data->status === 'valid';
+    
+        // Check if the 'status' property exists in the $data object.
+        $is_valid = isset($data->status) && $data->status === 'valid';
     }
-
+    
     if ($is_valid) {
         echo 'The license is valid.';
     } else {
         echo 'The license is invalid.';
     }
+    
 
     // Always die in functions echoing AJAX content
     wp_die();
 }
 
-add_action('wp_ajax_check_license', 'check_license_ajax');
+add_action('wp_ajax_check_license', 'my_dark_mode_check_license_ajax');
 
-function remove_license_ajax() {
+function my_dark_mode_remove_license_ajax() {
     // Check nonce validity
-    check_ajax_referer('my_dark_mode_nonce', 'nonce');
+    check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
     delete_option('my_dark_mode_license');
 
     echo 'The license has been removed.';
     die();
 }
 
-add_action('wp_ajax_remove_license', 'remove_license_ajax');
+add_action('wp_ajax_remove_license', 'my_dark_mode_remove_license_ajax');
 
 
-function save_license_ajax() {
-    // Check nonce validity and sanitize the input
-    check_ajax_referer('my_dark_mode_nonce', 'nonce');
-    $license = sanitize_text_field($_POST['license']);
+function my_dark_mode_save_license_ajax() {
+    // Check nonce validity
+    check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
 
-    // Save the license to the database
-    update_option('my_dark_mode_license', $license);
+    // Check if 'license' is set in $_POST
+    if (isset($_POST['license'])) {
+        $license = sanitize_text_field($_POST['license']);
 
-    echo 'License key saved.';
+        // Save the license to the database
+        update_option('my_dark_mode_license', $license);
+        echo 'License key saved.';
+    } else {
+        echo 'License key not provided.';
+    }
 
     // Always die in functions echoing AJAX content
     wp_die();
 }
 
-add_action('wp_ajax_save_license', 'save_license_ajax');
+
+add_action('wp_ajax_save_license', 'my_dark_mode_save_license_ajax');
