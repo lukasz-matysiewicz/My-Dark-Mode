@@ -43,9 +43,13 @@ but you also get a suite of customization tools to match your brand identity and
 
 == Changelog ==
 
+
+= 1.0.2 =
+
+Change function names
+
 = 1.0.1 =
 
-Compatibility with WordPress 6.3.1: 100%,
 Major security fixes.
 
 

@@ -9,7 +9,7 @@ function my_dark_mode_license_callback() {
     $license = get_option('my_dark_mode_license');
 
     // Get the license status
-    $license_status = get_license_status($license);
+    $license_status = my_dark_mode_get_license_status($license);
 
     // Nonce field
     $nonce = wp_create_nonce('my_dark_mode_nonce');
@@ -41,7 +41,7 @@ function my_dark_mode_license_callback() {
 }
 
 
-function get_license_status($license) {
+function my_dark_mode_get_license_status($license) {
     // Assume the license is invalid
     $status = 'Not Active';
 
@@ -66,7 +66,7 @@ function get_license_status($license) {
 }
 
 
-function check_license_ajax() {
+function my_dark_mode_check_license_ajax() {
     // Check nonce validity
     check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
 
@@ -107,9 +107,9 @@ function check_license_ajax() {
     wp_die();
 }
 
-add_action('wp_ajax_check_license', 'check_license_ajax');
+add_action('wp_ajax_check_license', 'my_dark_mode_check_license_ajax');
 
-function remove_license_ajax() {
+function my_dark_mode_remove_license_ajax() {
     // Check nonce validity
     check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
     delete_option('my_dark_mode_license');
@@ -118,10 +118,10 @@ function remove_license_ajax() {
     die();
 }
 
-add_action('wp_ajax_remove_license', 'remove_license_ajax');
+add_action('wp_ajax_remove_license', 'my_dark_mode_remove_license_ajax');
 
 
-function save_license_ajax() {
+function my_dark_mode_save_license_ajax() {
     // Check nonce validity
     check_ajax_referer('my_dark_mode_nonce', 'nonce', true);
 
@@ -141,4 +141,4 @@ function save_license_ajax() {
 }
 
 
-add_action('wp_ajax_save_license', 'save_license_ajax');
+add_action('wp_ajax_save_license', 'my_dark_mode_save_license_ajax');

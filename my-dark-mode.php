@@ -13,10 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
-function my_custom_head_script() {
+function my_dark_mode_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
-add_action('wp_head', 'my_custom_head_script', 1);
+add_action('wp_head', 'my_dark_mode_custom_head_script', 1);
 
 function my_dark_mode_enqueue_scripts() {
     // Enqueue the dark-mode.css file
@@ -117,14 +117,14 @@ function my_dark_mode_custom_css_callback() {
     <?php
 }
 
-function print_dark_mode_css() {
+function my_dark_mode_print_dark_mode_css() {
     $raw_css = get_option('my_dark_mode_custom_css');
-    $custom_css = wrap_custom_css_with_dark_mode_selector($raw_css);
+    $custom_css = my_dark_mode_wrap_custom_css_with_dark_mode_selector($raw_css);
     $safe_css = wp_strip_all_tags($custom_css);
 
     echo '<style>' . $safe_css . '</style>';
 }
-function wrap_custom_css_with_dark_mode_selector($css) {
+function my_dark_mode_wrap_custom_css_with_dark_mode_selector($css) {
     $lines = explode("\n", trim($css));
     $wrapped_css = "";
     $rule_start = "";  // This will store the selector for the CSS rule
@@ -167,7 +167,7 @@ function my_dark_mode_section_callback() {
 
 
 //global variables
-function get_dark_mode_settings() {
+function my_dark_mode_get_dark_mode_settings() {
     $switcher = get_option('my_dark_mode_switcher', 'no_switcher');
     $default_button_code = '<div class="mode-single-switch-border"><input type="checkbox" id="mode-switch-single" data-dark-mode-toggle aria-label="Toggle Dark Mode"><label for="mode-switch-single" class="mode-label-single"><div class="toggle"></div><div class="names"><div class="light">Light</div><div class="dark">Dark</div></div></label></div>';
     $button_code = get_option('my_dark_mode_button_code', $default_button_code);
@@ -214,7 +214,7 @@ function get_dark_mode_settings() {
 }
 
 function my_dark_mode_button_code_callback() {
-    $settings = get_dark_mode_settings();
+    $settings = my_dark_mode_get_dark_mode_settings();
     $button_code = $settings['button_code'];
     $default_button_code = $settings['default_button_code'];
     ?>
@@ -228,11 +228,16 @@ function my_dark_mode_button_code_callback() {
     </div>
     <?php
         wp_enqueue_script('my-dark-mode-reset-button', plugins_url('assets/js/my-dark-mode-reset-button.js', __FILE__), array(), '1.0.0', true);
+            // Pass PHP variables to JavaScript
+            $default_button_code_cleaned = str_replace("\n", "", $default_button_code);
+            wp_localize_script('my-dark-mode-reset-button', 'myDarkModeVars', array(
+                'defaultButtonCode' => $default_button_code_cleaned
+            ));        
 }
 
 
 function my_dark_mode_switcher_section_callback(){
-    $settings = get_dark_mode_settings();
+    $settings = my_dark_mode_get_dark_mode_settings();
     $switcher = $settings['switcher'];
     $button_code = $settings['button_code'];
     ?> 
@@ -348,7 +353,7 @@ add_action('admin_init', 'my_dark_mode_settings_init');
 
 // Create a shortcode for the dark mode toggle button
 function my_dark_mode_toggle_button_shortcode($atts) {
-    $settings = get_dark_mode_settings();
+    $settings = my_dark_mode_get_dark_mode_settings();
     $switcher = $settings['switcher'];
     $button_code = $settings['button_code'];
     $default_button_code = $settings['default_button_code'];
@@ -394,3 +399,15 @@ require_once plugin_dir_path(__FILE__) . 'my-dark-mode-colors.php';
 
 //Validate license
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-license.php';
+
+
+// Hook the function to the activation of the Pro plugin
+register_activation_hook(__FILE__, 'my_dark_mode_deactivate_lite_plugin');
+
+function my_dark_mode_deactivate_lite_plugin() {
+    // Check if the Lite plugin is active
+    if(is_plugin_active('my-dark-mode-lite/my-dark-mode.php')) { 
+        // Deactivate the Lite plugin
+        deactivate_plugins('my-dark-mode-lite/my-dark-mode.php');
+    }
+}

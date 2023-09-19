@@ -87,7 +87,7 @@ function my_dark_mode_generate_css() {
         }
     }
     $raw_custom_css = get_option('my_dark_mode_custom_css', '');
-    $processed_custom_css = wrap_custom_css_with_dark_mode_selector($raw_custom_css);
+    $processed_custom_css = my_dark_mode_wrap_custom_css_with_dark_mode_selector($raw_custom_css);
     $css .= $processed_custom_css;
 
     wp_add_inline_style('my-dark-mode-css', $css);
