@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
+
 add_settings_section(
     'my_dark_mode_section',
     __('', 'my-dark-mode'),
