@@ -43,25 +43,23 @@ but you also get a suite of customization tools to match your brand identity and
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 1.0.1 =
 
-Compatibility with WordPress 6.3.1: 100%,
 Major security fixes.
 
 
+=======
+>>>>>>> parent of a34eb41 (some major security fixes)
 = 1.0.0 =
 
-Stable 1.0.0 Version,
-Compatibility with WordPress 6.3.1: 100%.
-
-
+Stable 1.0.0 Version
 
 == Future Patchs ==
 
 - more switchers
 - change switcher size in real time
-- custom css - add scss compilator
+- empty defined colors not added to CSS
+- custom css - add scss compilator which also remove adding 'dark' to every css
 - hide licence key
 - validate date with key
-
-
