@@ -43,6 +43,29 @@ but you also get a suite of customization tools to match your brand identity and
 
 == Changelog ==
 
+
+= 1.0.2 =
+
+Change function names
+
+= 1.0.1 =
+
+Major security fixes.
+
+
 = 1.0.0 =
 
-Stable 1.0.0 Version
+Stable 1.0.0 Version,
+Compatibility with WordPress 6.3.1: 100%.
+
+
+
+== Future Patchs ==
+
+- more switchers
+- change switcher size in real time
+- custom css - add scss compilator
+- hide licence key
+- validate date with key
+
+
