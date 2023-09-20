@@ -13,7 +13,13 @@ License: GPL2
 if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
-
+function my_dark_mode_lite_deactivate_lite_plugin() {
+    // Check if the Lite plugin is active
+    if(is_plugin_active('my-dark-mode/my-dark-mode.php')) { 
+        // Deactivate the Lite plugin
+        deactivate_plugins('my-dark-mode/my-dark-mode.php');
+    }
+}
 function my_dark_mode_lite_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
