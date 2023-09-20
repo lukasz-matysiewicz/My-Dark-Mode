@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
-class My_Dark_Mode_Widget extends WP_Widget {
+class My_Dark_Mode_Lite_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'my_dark_mode_widget',
@@ -21,7 +21,7 @@ class My_Dark_Mode_Widget extends WP_Widget {
     
 }
 
-function my_dark_mode_register_widget() {
-    register_widget('My_Dark_Mode_Widget');
+function my_dark_mode_lite_register_widget() {
+    register_widget('My_Dark_Mode_Lite_Widget');
 }
-add_action('widgets_init', 'my_dark_mode_register_widget');
+add_action('widgets_init', 'my_dark_mode_lite_register_widget');

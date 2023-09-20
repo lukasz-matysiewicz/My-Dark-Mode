@@ -2,23 +2,24 @@
 /*
 Plugin Name: My Dark Mode Lite
 Plugin URI: https://wpspacecrafters.com
-Description: A Lightweight plugin to enable dark mode on your WordPress site.
+Description: A Super Lightweight plugin to enable dark mode on your WordPress site.
 Version: 1.0.2
-Author: Matys
-Author URI: https://matysiewicz.studio
+Author: WPspaceCrafters
+Author URI: https://wpspacecrafters.com
 License: GPL2
+
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
-function my_dark_mode_custom_head_script() {
+function my_dark_mode_lite_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
-add_action('wp_head', 'my_dark_mode_custom_head_script', 1);
+add_action('wp_head', 'my_dark_mode_lite_custom_head_script', 1);
 
-function my_dark_mode_enqueue_scripts() {
+function my_dark_mode_lite_enqueue_scripts() {
     // Enqueue the dark-mode.css file
     wp_enqueue_style('my-dark-mode-css', plugin_dir_url(__FILE__) . 'assets/css/my-dark-mode.css', array(), '1.0', 'all');
 
@@ -27,29 +28,29 @@ function my_dark_mode_enqueue_scripts() {
 
     wp_enqueue_script('my-dark-mode-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-save.js', array('jquery'), '1.0', true);
 }
-add_action('wp_enqueue_scripts', 'my_dark_mode_enqueue_scripts', 1);
+add_action('wp_enqueue_scripts', 'my_dark_mode_lite_enqueue_scripts', 1);
 
 // create setting page
-function my_dark_mode_admin_menu() {
+function my_dark_mode_lite_admin_menu() {
     add_menu_page(
         '<h1>My Dark Mode Settings</h1>',
         'My Dark Mode',
         'manage_options',
         'my-dark-mode',
-        'my_dark_mode_settings_page',
+        'my_dark_mode_lite_settings_page',
         plugin_dir_url( __FILE__ ) . 'assets/img/my-dark-mode.svg',
         6
     );
 }
-add_action('admin_menu', 'my_dark_mode_admin_menu');
+add_action('admin_menu', 'my_dark_mode_lite_admin_menu');
 
-function my_dark_mode_section_callback() {
+function my_dark_mode_lite_section_callback() {
     ?>
     <div>Use those fields to customize My Dark Mode Styles.</div>
     <?php
 }
 
-function my_dark_mode_settings_page() {
+function my_dark_mode_lite_settings_page() {
     if (!current_user_can('manage_options')) {
         return;
     }
@@ -77,7 +78,7 @@ function my_dark_mode_settings_page() {
     <?php
 }
 
-function my_dark_mode_save_settings() {
+function my_dark_mode_lite_save_settings() {
     check_admin_referer('my_dark_mode_nonce');
 
     if (!current_user_can('manage_options')) {
@@ -105,11 +106,11 @@ function my_dark_mode_save_settings() {
     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
     exit;
 }
-add_action('admin_post_save_my_dark_mode_settings', 'my_dark_mode_save_settings');
+add_action('admin_post_save_my_dark_mode_lite_settings', 'my_dark_mode_lite_save_settings');
 
 
 //global variables
-function my_dark_mode_get_dark_mode_settings() {
+function my_dark_mode_lite_get_dark_mode_settings() {
     $switcher = get_option('my_dark_mode_switcher', 'switcher1');
 
     $switcher1_width = get_option('switcher1_width', 90);
@@ -151,8 +152,8 @@ function my_dark_mode_get_dark_mode_settings() {
     );
 }
 
-function my_dark_mode_switcher_section_callback(){
-    $settings = my_dark_mode_get_dark_mode_settings();
+function my_dark_mode_lite_switcher_section_callback(){
+    $settings = my_dark_mode_lite_get_dark_mode_settings();
     $switcher = $settings['switcher'];
     ?> 
     <div class="mdm-container">
@@ -194,7 +195,7 @@ function my_dark_mode_switcher_section_callback(){
 }
 
 // Register the settings field to store the custom button code
-function my_dark_mode_settings_init() {
+function my_dark_mode_lite_settings_init() {
     register_setting('my_dark_mode', 'my_dark_mode_switcher');
     register_setting('my_dark_mode', 'switcher1_width');
     register_setting('my_dark_mode', 'switcher1_height');
@@ -204,12 +205,12 @@ function my_dark_mode_settings_init() {
     require_once plugin_dir_path(__FILE__) . 'my-dark-mode-fields.php';
     
 }
-add_action('admin_init', 'my_dark_mode_settings_init');
+add_action('admin_init', 'my_dark_mode_lite_settings_init');
 
 
 // Create a shortcode for the dark mode toggle button
-function my_dark_mode_toggle_button_shortcode($atts) {
-    $settings = my_dark_mode_get_dark_mode_settings();
+function my_dark_mode_lite_toggle_button_shortcode($atts) {
+    $settings = my_dark_mode_lite_get_dark_mode_settings();
     $switcher = $settings['switcher'];
 
     if ($switcher == 'switcher1') {
@@ -219,13 +220,13 @@ function my_dark_mode_toggle_button_shortcode($atts) {
         return $settings['switcher2_html'];
     }
 }
-add_shortcode('my_dark_mode_toggle_button', 'my_dark_mode_toggle_button_shortcode');
+add_shortcode('my_dark_mode_lite_toggle_button', 'my_dark_mode_lite_toggle_button_shortcode');
 
 //Added button to widgets area
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-widget.php';
 
 //Add code editor instead of textarea
-function my_dark_mode_enqueue_admin_scripts($hook) {
+function my_dark_mode_lite_enqueue_admin_scripts($hook) {
     if ('toplevel_page_my-dark-mode' !== $hook) {
         return;
     }
@@ -237,7 +238,7 @@ function my_dark_mode_enqueue_admin_scripts($hook) {
     wp_enqueue_code_editor(array('type' => 'text/html'));
     wp_enqueue_script('my-dark-mode-admin-js', plugin_dir_url(__FILE__) . 'assets/js/my-dark-mode-admin.js', array('jquery'), '1.0', true);
 }
-add_action('admin_enqueue_scripts', 'my_dark_mode_enqueue_admin_scripts', 1);
+add_action('admin_enqueue_scripts', 'my_dark_mode_lite_enqueue_admin_scripts', 1);
 
 
 //Add color pickers
