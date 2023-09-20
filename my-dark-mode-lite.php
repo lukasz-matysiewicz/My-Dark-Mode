@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: My Dark Mode
+Plugin Name: My Dark Mode Lite
 Plugin URI: https://wpspacecrafters.com
 Description: A Lightweight plugin to enable dark mode on your WordPress site.
 Version: 1.0.2
