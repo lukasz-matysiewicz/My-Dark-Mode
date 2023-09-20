@@ -244,3 +244,25 @@ add_action('admin_enqueue_scripts', 'my_dark_mode_lite_enqueue_admin_scripts', 1
 //Add color pickers
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-colors.php';
 
+function my_dark_mode_button_lite_code_callback(){
+    ?> 
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container premium">
+    <p class="switcher-info"><img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/img/button-code.jpg'; ?>" alt="Custom Button"></p>
+    <?php 
+}
+function my_dark_mode_lite_logo_callback(){
+    ?> 
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container premium">
+    <p class="switcher-info"><img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/img/custom-logo.jpg'; ?>" alt="Custom Logo"></p>
+    <?php 
+}
+function my_dark_mode_lite_custom_css_callback() {
+    ?> 
+    <div class="premium-label">Premium Feature</div>
+    <div class="mdm-container premium">
+        <p class="switcher-info"><img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/img/custom-css.jpg'; ?>" alt="Custom CSS"></p>
+    </div>
+    <?php 
+}
