@@ -13,6 +13,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
+<<<<<<< Updated upstream
+=======
+function my_dark_mode_deactivate_lite_plugin() {
+    // Check if the Lite plugin is active
+    if(is_plugin_active('my-dark-mode-lite/my-dark-mode-lite.php')) { 
+        // Deactivate the Lite plugin
+        deactivate_plugins('my-dark-mode-lite/my-dark-mode-lite.php');
+    }
+}
+// Hook the function to the activation of the Pro plugin
+register_activation_hook(__FILE__, 'my_dark_mode_deactivate_lite_plugin');
+
+
+>>>>>>> Stashed changes
 function my_dark_mode_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
@@ -401,6 +415,7 @@ require_once plugin_dir_path(__FILE__) . 'my-dark-mode-colors.php';
 require_once plugin_dir_path(__FILE__) . 'my-dark-mode-license.php';
 
 
+<<<<<<< Updated upstream
 // Hook the function to the activation of the Pro plugin
 register_activation_hook(__FILE__, 'my_dark_mode_deactivate_lite_plugin');
 
@@ -411,3 +426,6 @@ function my_dark_mode_deactivate_lite_plugin() {
         deactivate_plugins('my-dark-mode-lite/my-dark-mode.php');
     }
 }
+=======
+
+>>>>>>> Stashed changes
