@@ -20,6 +20,10 @@ function my_dark_mode_lite_deactivate_lite_plugin() {
         deactivate_plugins('my-dark-mode/my-dark-mode.php');
     }
 }
+// Hook the function to the activation of the Pro plugin
+register_activation_hook(__FILE__, 'my_dark_mode_lite_deactivate_lite_plugin');
+
+
 function my_dark_mode_lite_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
