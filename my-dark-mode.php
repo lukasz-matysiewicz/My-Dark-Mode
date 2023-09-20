@@ -12,8 +12,6 @@ License: GPL2
 if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
-// Hook the function to the activation of the Pro plugin
-register_activation_hook(__FILE__, 'my_dark_mode_deactivate_lite_plugin');
 
 function my_dark_mode_deactivate_lite_plugin() {
     // Check if the Lite plugin is active
@@ -22,6 +20,8 @@ function my_dark_mode_deactivate_lite_plugin() {
         deactivate_plugins('my-dark-mode-lite/my-dark-mode.php');
     }
 }
+register_activation_hook(__FILE__, 'my_dark_mode_deactivate_lite_plugin');
+
 function my_dark_mode_custom_head_script() {
     wp_enqueue_script('my-dark-mode-switcher', plugins_url('assets/js/my-dark-mode-switcher.js', __FILE__), array(), '1.0.0', false);
 }
