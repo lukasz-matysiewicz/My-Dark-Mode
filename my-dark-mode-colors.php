@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
-function my_dark_mode_colors_callback() {
+function my_dark_mode_lite_colors_callback() {
     $bg_color_class = get_option('mdm_bg_color_class', 'body');
     $dark_bg_att = get_option('mdm_dark_bg_color_att', 'background-color');
     $dark_bg_color = get_option('mdm_dark_bg_color_picker', '#222');
@@ -48,7 +48,7 @@ function my_dark_mode_colors_callback() {
     <?php
 }
 
-function my_dark_mode_register_settings() {
+function my_dark_mode_lite_register_settings() {
     register_setting('my_dark_mode', 'mdm_bg_color_class', 'sanitize_text_field');
     register_setting('my_dark_mode', 'mdm_dark_bg_color_att', 'sanitize_text_field');
     register_setting('my_dark_mode', 'mdm_dark_bg_color_picker', 'sanitize_hex_color');
@@ -61,10 +61,10 @@ function my_dark_mode_register_settings() {
       
 }
 
-add_action('admin_init', 'my_dark_mode_register_settings');
+add_action('admin_init', 'my_dark_mode_lite_register_settings');
 
 
-function my_dark_mode_generate_css() {
+function my_dark_mode_lite_generate_css() {
     $bg_color_class = get_option('mdm_bg_color_class', 'body');
     $dark_bg_att = get_option('mdm_dark_bg_color_att', 'background-color');
     $dark_bg_color = get_option('mdm_dark_bg_color_picker', '#222');
@@ -86,10 +86,8 @@ function my_dark_mode_generate_css() {
             }";
         }
     }
-    $raw_custom_css = get_option('my_dark_mode_custom_css', '');
-    $processed_custom_css = my_dark_mode_wrap_custom_css_with_dark_mode_selector($raw_custom_css);
-    $css .= $processed_custom_css;
+    
 
     wp_add_inline_style('my-dark-mode-css', $css);
 }
-add_action('wp_enqueue_scripts', 'my_dark_mode_generate_css', 20);
+add_action('wp_enqueue_scripts', 'my_dark_mode_lite_generate_css', 20);
