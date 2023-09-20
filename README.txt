@@ -51,3 +51,12 @@ Compatibility with WordPress 6.3.1: 100%.
 
 
 
+== Future Patchs ==
+
+- more switchers
+- change switcher size in real time
+- custom css - add scss compilator
+- hide licence key
+- validate date with key
+
+
