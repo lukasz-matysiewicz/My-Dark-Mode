@@ -3,7 +3,7 @@
 Plugin Name: My Dark Mode
 Plugin URI: https://wpspacecrafters.com
 Description: A Super Lightweight plugin to enable dark mode on your WordPress site.
-Version: 1.0.2
+Version: 1.0
 Author: WPspaceCrafters
 Author URI: https://wpspacecrafters.com
 License: GPL2
@@ -16,6 +16,15 @@ This highly customizable tool gives you full control over the button's appearanc
 Despite its wide range of functionalities, it's extremely lightweight, 
 ensuring your website’s performance remains unaffected.
 
+This plugin also supports custom CSS, letting you fine-tune the look and feel of your site in dark mode. 
+You can adjust everything from color schemes to text size to create a comfortable viewing experience
+for your visitors during night-time browsing.
+
+"My Dark Mode" also includes a unique feature that allows you to add a custom logo for dark mode. 
+This way, you can further tailor your branding to match the darker aesthetic, providing a coherent 
+and immersive experience for users who prefer dark mode.
+So, with "My Dark Mode," not only do you get a dark mode functionality, 
+but you also get a suite of customization tools to match your brand identity and enhance user experience.
 
 
 == Installation ==

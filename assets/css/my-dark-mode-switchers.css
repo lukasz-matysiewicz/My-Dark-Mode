@@ -1,3 +1,38 @@
+/* 
+
+<div class="mode-single-switch-border">
+    <input type="checkbox" id="mode-switch-single" data-dark-mode-toggle aria-label="Toggle Dark Mode">
+    <label for="mode-switch-single" class="mode-label-single">
+        <div class="toggle"></div>
+        <div class="names">
+            <p class="light">Light</p>
+            <p class="dark">Dark</p>
+        </div>
+    </label>
+</div>
+
+
+<div class="mode-switch-border">
+  <input type="checkbox" id="mode-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
+  <label for="mode-switch" class="mode-label">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+<div class="circle-switch-border">
+  <input type="checkbox" id="circle-switch" data-dark-mode-toggle aria-label="Toggle Dark Mode">
+  <label for="circle-switch" class="circle-label">
+    <div class="circle">
+      <div class="crescent"></div>
+    </div>
+  </label>
+</div>
+
+*/
 
 /* Light/Dark Button */
 .mode-single-switch-border {
