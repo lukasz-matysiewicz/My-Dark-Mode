@@ -1,4 +1,4 @@
-=== My Dark Mode ===
+-=== My Dark Mode ===
 
 Plugin Name: My Dark Mode
 Plugin URI: https://wpspacecrafters.com
@@ -67,5 +67,4 @@ Compatibility with WordPress 6.3.1: 100%.
 - custom css - add scss compilator
 - hide licence key
 - validate date with key
-
 
