@@ -114,7 +114,7 @@ input.switch_input {
     top: 60px;
     left: 0%;
     z-index: 12;
-    font-size: 1.6rem;
+    font-size: 0.8rem;
     transform: rotate(-5deg);
     color: orange;
     font-weight: bolder;

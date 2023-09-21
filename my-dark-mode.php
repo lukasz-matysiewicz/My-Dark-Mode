@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: My Dark Mode
-Plugin URI: https://matysiewicz.studio/my-dark-mode
-Description: A Lightweight plugin to enable dark mode on your WordPress site.
-Version: 1.0
-Author: Matys
-Author URI: https://matysiewicz.studio
+Plugin URI: https://wpspacecrafters.com
+Description: A Super Lightweight plugin to enable dark mode on your WordPress site.
+Version: 1.0.3
+Author: WPspaceCrafters
+Author URI: https://wpspacecrafters.com
 License: GPL2
 */
 
@@ -136,35 +136,42 @@ function my_dark_mode_print_dark_mode_css() {
 function my_dark_mode_wrap_custom_css_with_dark_mode_selector($css) {
     $lines = explode("\n", trim($css));
     $wrapped_css = "";
-    $rule_start = "";  // This will store the selector for the CSS rule
-    $rule_body = "";  // This will store the content of the CSS rule
+    $selectors = [];  // Store selectors for the current rule
+    $rule_body = "";  // Store the body of the current rule
+    $in_rule = false; // Are we inside a rule's declaration block?
 
     foreach ($lines as $line) {
         $trimmed = trim($line);
 
         if ($trimmed) {
-            // If the line is the start of a rule.
+            // If the line is the start of a rule body.
             if (substr($trimmed, -1) === '{') {
-                // If rule_body is not empty, then it's time to wrap the previous rule.
-                if ($rule_body) {
-                    $wrapped_css .= "html[my-dark-mode='dark'] " . $rule_start . " {" . $rule_body . "\n";
-                    $rule_body = "";  // Reset rule_body
-                }
-                $rule_start = substr($trimmed, 0, -1);  // Store the selector without the '{'
+                $in_rule = true;
+
+                // Prefix each selector with "html[my-dark-mode='dark'] " and then join them with ", "
+                $prefixed_selectors = array_map(function($selector) {
+                    return "html[my-dark-mode='dark'] " . trim($selector);
+                }, $selectors);
+
+                $wrapped_css .= implode(", ", $prefixed_selectors) . " {\n";
+                $selectors = [];
+            } elseif ($in_rule && $trimmed === '}') {
+                // If we're ending the rule's declaration block
+                $in_rule = false;
+                $wrapped_css .= $rule_body . "}\n";
+                $rule_body = "";
+            } elseif (!$in_rule) {
+                // It's part of the selectors
+                $selectors = array_merge($selectors, explode(',', $trimmed));
             } else {
-                $rule_body .= $line . "\n";
+                // It's part of the rule body
+                $rule_body .= $trimmed . "\n";
             }
         }
     }
 
-    // Handle the last rule if there's any.
-    if ($rule_body) {
-        $wrapped_css .= "html[my-dark-mode='dark'] " . $rule_start . " {" . $rule_body;
-    }
-
     return $wrapped_css;
 }
-
 
 
 
