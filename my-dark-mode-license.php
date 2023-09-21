@@ -90,38 +90,46 @@ function my_dark_mode_check_license_ajax() {
     // Check the license validity via API call
     $response = wp_remote_post( 'https://wpspacecrafters.com/wp-json/my-dark-mode/v1/check-license/', array(
         'headers' => array('Content-Type' => 'application/json; charset=utf-8'),
-        'body' => json_encode(array('license' => $license)),
+        'body' => json_encode(array(
+            'license' => $license,
+            'user_id' => get_current_user_id() // Or however you're determining the user on the client side
+        )),
         'method' => 'POST',
         'data_format' => 'body',
     ));
 
-    // If the API call was successful, check the response
-    if ( is_wp_error( $response ) ) {
-        echo 'An error occurred while checking the license.';
-    } else {
+        // If the API call was successful, check the response
+        // If the API call was successful, check the response
+    if ( !is_wp_error( $response ) ) {
         $body = wp_remote_retrieve_body( $response );
         $data = json_decode( $body );
-    
+
         // Check if the 'status' property exists in the $data object.
         $is_valid = isset($data->status) && $data->status === 'valid';
 
-        // Check if the license has expired
-        if ($is_valid && isset($data->expiry_date)) {
-            $current_date = new DateTime();
-            $expiry_date = new DateTime($data->expiry_date);
+        if ($is_valid) {
+            // You can now handle the additional data from the server
+            $expiry_date = isset($data->expiry_date) ? $data->expiry_date : null;
+            $active_websites_count = isset($data->active_websites_count) ? $data->active_websites_count : null;
 
-            if ($current_date > $expiry_date) {
-                $is_valid = false;
-                echo 'The license has expired.';
-                wp_die();
+            // Display the data or store it, as required
+            // ...
+
+            echo 'The license is valid.';
+        } else {
+            echo 'The license is invalid.';
+
+            if (isset($data->expiry_date)) {
+                $current_date = new DateTime();
+                $expiry_date = new DateTime($data->expiry_date);
+
+                if ($current_date > $expiry_date) {
+                    echo ' The license has expired.';
+                }
             }
         }
-    }
-    
-    if ($is_valid) {
-        echo 'The license is valid.';
     } else {
-        echo 'The license is invalid.';
+        echo 'An error occurred while checking the license.';
     }
     
 
