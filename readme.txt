@@ -3,7 +3,7 @@
 Plugin Name: My Dark Mode
 Plugin URI: https://wpspacecrafters.com
 Description: A Super Lightweight plugin to enable dark mode on your WordPress site.
-Version: 1.0
+Version: 1.0.3
 Author: WPspaceCrafters
 Author URI: https://wpspacecrafters.com
 License: GPL2
@@ -43,6 +43,9 @@ but you also get a suite of customization tools to match your brand identity and
 
 == Changelog ==
 
+= 1.0.3 =
+
+Custom CSS validation
 
 = 1.0.2 =
 
