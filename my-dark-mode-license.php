@@ -59,6 +59,16 @@ function my_dark_mode_get_license_status($license) {
         $data = json_decode( $body );
         if ( $data->status === 'valid' ) {
             $status = 'Active';
+
+            // Check if the license has expired
+            if (isset($data->expiry_date)) {
+                $current_date = new DateTime();
+                $expiry_date = new DateTime($data->expiry_date);
+
+                if ($current_date > $expiry_date) {
+                    $status = 'Expired';
+                }
+            }
         }
     }
 
@@ -94,6 +104,18 @@ function my_dark_mode_check_license_ajax() {
     
         // Check if the 'status' property exists in the $data object.
         $is_valid = isset($data->status) && $data->status === 'valid';
+
+        // Check if the license has expired
+        if ($is_valid && isset($data->expiry_date)) {
+            $current_date = new DateTime();
+            $expiry_date = new DateTime($data->expiry_date);
+
+            if ($current_date > $expiry_date) {
+                $is_valid = false;
+                echo 'The license has expired.';
+                wp_die();
+            }
+        }
     }
     
     if ($is_valid) {
