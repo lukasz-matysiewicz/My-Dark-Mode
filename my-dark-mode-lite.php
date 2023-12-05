@@ -3,10 +3,12 @@
 Plugin Name: My Dark Mode Lite
 Plugin URI: https://wpspacecrafters.com
 Description: A Super Lightweight plugin to enable dark mode on your WordPress site.
-Version: 1.0.2
+Version: 1.0.3
 Author: WPspaceCrafters
 Author URI: https://wpspacecrafters.com
 License: GPL2
+Stable Tag: 1.0.3
+Tested Up To: 6.4.1
 
 */
 
@@ -94,24 +96,19 @@ function my_dark_mode_lite_save_settings() {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
 
-    update_option('my_dark_mode_switcher', intval($_POST['my_dark_mode_switcher']));
+    // Sanitize and validate the POST data
+    $switcher1_width = isset($_POST['switcher1_width']) ? intval($_POST['switcher1_width']) : 0;
+    $switcher1_height = isset($_POST['switcher1_height']) ? intval($_POST['switcher1_height']) : 0;
+    $switcher2_width = isset($_POST['switcher2_width']) ? intval($_POST['switcher2_width']) : 0;
+    $switcher2_height = isset($_POST['switcher2_height']) ? intval($_POST['switcher2_height']) : 0;
 
-    if (is_numeric($_POST['switcher1_width'])) {
-        update_option('switcher1_width', $_POST['switcher1_width']);
-    }
+    // Update the options in the database
+    update_option('mdm_switcher1_width', $switcher1_width);
+    update_option('mdm_switcher1_height', $switcher1_height);
+    update_option('mdm_switcher2_width', $switcher2_width);
+    update_option('mdm_switcher2_height', $switcher2_height);
 
-    if (is_numeric($_POST['switcher1_height'])) {
-        update_option('switcher1_height', $_POST['switcher1_height']);
-    }
-
-    if (is_numeric($_POST['switcher2_width'])) {
-        update_option('switcher2_width', $_POST['switcher2_width']);
-    }
-
-    if (is_numeric($_POST['switcher2_height'])) {
-        update_option('switcher2_height', $_POST['switcher2_height']);
-    }
-
+    // Redirect after saving settings
     wp_redirect(admin_url('admin.php?page=my-dark-mode&settings-updated=true'));
     exit;
 }
@@ -122,11 +119,11 @@ add_action('admin_post_save_my_dark_mode_lite_settings', 'my_dark_mode_lite_save
 function my_dark_mode_lite_get_dark_mode_settings() {
     $switcher = get_option('my_dark_mode_switcher', 'switcher1');
 
-    $switcher1_width = get_option('switcher1_width', 90);
-    $switcher1_height = get_option('switcher1_height', 40);
+    $switcher1_width = get_option('mdm_switcher1_width', 90);
+    $switcher1_height = get_option('mdm_switcher1_height', 40);
 
-    $switcher2_width = get_option('switcher2_width', 40);
-    $switcher2_height = get_option('switcher2_height', 40);
+    $switcher2_width = get_option('mdm_switcher2_width', 40);
+    $switcher2_height = get_option('mdm_switcher2_height', 40);
 
     $switcher1_html = '
     <div class="mode-switch-border" style="width:'.$switcher1_width.'px; height:'.$switcher1_height.'px;">
@@ -181,8 +178,8 @@ function my_dark_mode_lite_switcher_section_callback(){
                 
             </div>
             <div>
-                Width: <input type="number" class="switch_input" name="switcher1_width" value="<?php echo wp_kses_post($settings['switcher1_width']); ?>">
-                Height: <input type="number" class="switch_input" name="switcher1_height" value="<?php echo wp_kses_post($settings['switcher1_height']); ?>">
+                Width: <input type="number" class="switch_input" name="mdm_switcher1_width" value="<?php echo wp_kses_post($settings['switcher1_width']); ?>">
+                Height: <input type="number" class="switch_input" name="mdm_switcher1_height" value="<?php echo wp_kses_post($settings['switcher1_height']); ?>">
             </div>
         </div>
         <div class="switcher">
@@ -195,8 +192,8 @@ function my_dark_mode_lite_switcher_section_callback(){
                 <?php echo wp_kses_post($settings['switcher2_html']); ?>
             </div>
             <div>
-                Width: <input type="number" class="switch_input" name="switcher2_width" value="<?php echo wp_kses_post($settings['switcher2_width']); ?>">
-                Height: <input type="number" class="switch_input" name="switcher2_height" value="<?php echo wp_kses_post($settings['switcher2_height']); ?>">
+                Width: <input type="number" class="switch_input" name="mdm_switcher2_width" value="<?php echo wp_kses_post($settings['switcher2_width']); ?>">
+                Height: <input type="number" class="switch_input" name="mdm_switcher2_height" value="<?php echo wp_kses_post($settings['switcher2_height']); ?>">
             </div>
         </div>
     </div>
@@ -206,10 +203,10 @@ function my_dark_mode_lite_switcher_section_callback(){
 // Register the settings field to store the custom button code
 function my_dark_mode_lite_settings_init() {
     register_setting('my_dark_mode', 'my_dark_mode_switcher');
-    register_setting('my_dark_mode', 'switcher1_width');
-    register_setting('my_dark_mode', 'switcher1_height');
-    register_setting('my_dark_mode', 'switcher2_width');
-    register_setting('my_dark_mode', 'switcher2_height');
+    register_setting('my_dark_mode', 'mdm_switcher1_width');
+    register_setting('my_dark_mode', 'mdm_switcher1_height');
+    register_setting('my_dark_mode', 'mdm_switcher2_width');
+    register_setting('my_dark_mode', 'mdm_switcher2_height');
     //list of fields
     require_once plugin_dir_path(__FILE__) . 'my-dark-mode-fields.php';
     

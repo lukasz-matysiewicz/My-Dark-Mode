@@ -25,19 +25,18 @@ function my_dark_mode_lite_colors_callback() {
                     <td id="col3"><input type="text" id="mdm_dark_bg_color_picker" name="mdm_dark_bg_color_picker" value="<?php echo esc_attr($dark_bg_color); ?>"></td>
                 </tr>
                 <?php 
-                for ($i = 0; $i < 10; $i++) {
+                for ($i = 0; $i < 15; $i++) {
                     $color_class = get_option('mdm_new_color_class_' . $i, '');
                     $color_att = get_option('mdm_dark_new_color_att_' . $i, '');
                     $color_value = get_option('mdm_dark_new_color_picker_' . $i, '');
                 
                     if ($color_class) {
                         echo '<tr class="colors">
-                                <td><input type="text" id="mdm_new_color_class_' . htmlspecialchars($i) . '" name="mdm_new_color_class_' . htmlspecialchars($i) . '" value="' . esc_attr($color_class) . '"></td>
-                                <td><input type="text" id="mdm_dark_new_color_att_' . htmlspecialchars($i) . '" name="mdm_dark_new_color_att_' . htmlspecialchars($i) . '" value="' . esc_attr($color_att) . '"></td>
-                                <td><input type="text" id="mdm_dark_new_color_picker_' . htmlspecialchars($i) . '" name="mdm_dark_new_color_picker_' . htmlspecialchars($i) . '" value="' . esc_attr($color_value) . '"></td>
-                              </tr>';
-                    }
-                    
+                              <td><input type="text" id="' . esc_attr('mdm_new_color_class_' . $i) . '" name="' . esc_attr('mdm_new_color_class_' . $i) . '" value="' . esc_attr($color_class) . '"></td>
+                              <td><input type="text" id="' . esc_attr('mdm_dark_new_color_att_' . $i) . '" name="' . esc_attr('mdm_dark_new_color_att_' . $i) . '" value="' . esc_attr($color_att) . '"></td>
+                              <td><input type="text" id="' . esc_attr('mdm_dark_new_color_picker_' . $i) . '" name="' . esc_attr('mdm_dark_new_color_picker_' . $i) . '" value="' . esc_attr($color_value) . '"></td>
+                             </tr>';                   
+                    }                 
                 }
                 ?>
             </tbody>

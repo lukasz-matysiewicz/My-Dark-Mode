@@ -5,7 +5,7 @@
     max-width: 1200px;
 }
 
-.mdm-container {
+.my-dark-mode-container {
     background: #fff;
     border-radius: 20px;
     padding: 30px;
@@ -20,25 +20,30 @@
     padding: 0 50px;
 }
 
-.mdm-container .button {
+.my-dark-mode-container .button {
     background: #fff;
     border-radius: 10px;
     padding: 5px 20px;
 }
-
-.mdm-container input[type=text] {
+.my-dark-mode-container input#submit {
+    background: #2271b1;
+}
+.my-dark-mode-container input[type=text] {
     padding: 5px 20px;
     border-radius: 15px;
 }
-/* .mdm-container.colors-group table {
+/* .my-dark-mode-container.colors-group table {
     display: flex;
 } */
-.mdm-container.colors-group th, .mdm-container.colors-group td {
+.my-dark-mode-container th {
+    min-width: 200px;
+}
+.my-dark-mode-container.colors-group th, .my-dark-mode-container.colors-group td {
     min-width: 350px;
     vertical-align: middle;
     text-align: center;
 }
-.mdm-container.colors-group td {
+.my-dark-mode-container.colors-group td {
     border-top: 1px solid rgba(0,0,0,.15);
 }
 .wp-picker-container .wp-color-result.button {
@@ -50,7 +55,7 @@
     border-radius: 0 9px 9px 0;
     padding: 5px 20px;
 }
-.mdm-container h3 {
+.my-dark-mode-container h3 {
     margin: 0;
     margin-bottom: 10px;
     font-size: 14px;
